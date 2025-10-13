@@ -9,4 +9,8 @@ export default class SalonesService {
     buscarTodos = () => {
         return this.salones.buscarTodos();
     }
+
+    buscarPorId = (id) => {
+        return this.salones.buscarPorId(id);
+    }
 }
