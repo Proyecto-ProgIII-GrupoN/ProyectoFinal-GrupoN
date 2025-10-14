@@ -1,8 +1,10 @@
-import app from "./reservas.js";
+import app from './reservas.js';
+import dotenv from 'dotenv';
 
-process.loadEnvFile();
+dotenv.config(); 
 
-//lanzo servidor express
-app.listen(process.env.PUERTO, () => {
-    console.log("Servidor Levantado en puerto --> " + process.env.PUERTO);
-})
+const PORT = Number(process.env.PUERTO) || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor levantado en puerto --> ${PORT}`);
+});

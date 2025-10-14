@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Proyecto-ProgIII-GrupoN/ProyectoFinal-GrupoN#readme",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
     "handlebars": "^4.7.8",

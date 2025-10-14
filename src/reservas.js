@@ -1,11 +1,13 @@
 import express from 'express';
 import { router as v1SalonesRoutes } from './v1/routes/salonesRoutes.js';
 
-//instancia express
 const app = express();
 
-// parsea las solicitudes con un body a json
 app.use(express.json());
+
+app.get('/estado', (_req, res) => {
+  res.json({ ok: true });
+});
 
 app.use('/api/v1/salones', v1SalonesRoutes);
 
