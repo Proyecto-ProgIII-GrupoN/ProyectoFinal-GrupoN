@@ -1,30 +1,34 @@
-import { pool } from './conexion.js';
+import { conexion } from "./conexion.js";
 
 export default class Salones {
-  buscarTodos = async () => {
-    const [rows] = await pool.execute(
-      'SELECT salon_id, titulo, direccion, latitud, longitud, capacidad, importe, activo, creado, modificado FROM salones WHERE activo = 1'
-    );
-    return rows;
-  }
+    buscarTodos = async ({ page = 1, limit = 10, q = '', activo = 1 }) => {
+        const offset = (page - 1) * limit;
 
-  buscarPorId = async (id) => {
-    const [rows] = await pool.execute(
-      'SELECT salon_id, titulo, direccion, latitud, longitud, capacidad, importe, activo, creado, modificado FROM salones WHERE activo = 1 AND salon_id = ?',
-      [id]
-    );
-    return rows[0] || null;
-  }
+        let filtros = 'WHERE activo = ?';
+        let params = [activo];
 
-  crear = async ({ titulo, direccion, capacidad = null, importe, latitud = null, longitud = null }) => {
-    const [result] = await pool.execute(
-      'INSERT INTO salones (titulo, direccion, capacidad, importe, latitud, longitud) VALUES (?,?,?,?,?,?)',
-      [titulo, direccion, capacidad, importe, latitud, longitud]
-    );
-    const [rows] = await pool.execute(
-      'SELECT salon_id, titulo, direccion, latitud, longitud, capacidad, importe, activo, creado, modificado FROM salones WHERE salon_id = ?',
-      [result.insertId]
-    );
-    return rows[0];
-  }
+        if (q) {
+            filtros += ' AND titulo LIKE ?';
+            params.push(`%${q}%`);
+        }
+
+        const sqlData = `
+            SELECT * FROM salones 
+            ${filtros}
+            ORDER BY salon_id ASC
+            LIMIT ? OFFSET ?`;
+
+        const sqlTotal = `
+            SELECT COUNT(*) AS total 
+            FROM salones 
+            ${filtros}`;
+
+        const [data] = await conexion.execute(sqlData, [...params, Number(limit), Number(offset)]);
+        const [totalRows] = await conexion.execute(sqlTotal, params);
+
+        return {
+            data,
+            total: totalRows[0].total
+        };
+    }
 }
