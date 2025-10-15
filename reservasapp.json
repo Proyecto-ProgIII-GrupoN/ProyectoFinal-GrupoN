@@ -132,7 +132,7 @@
       "name": "Notificacion",
       "seq": 3,
       "request": {
-        "url": "http://localhost:3000/notificacion",
+        "url": "{{apiUrl}}/notificacion",
         "method": "POST",
         "headers": [],
         "params": [],
