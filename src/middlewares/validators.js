@@ -168,7 +168,7 @@ export const validateEliminarSalon = [
     const { id } = req.params;
     try {
       const [reservas] = await pool.execute(
-        'SELECT COUNT(*) as total FROM reservas WHERE salon_id = ? AND fecha >= CURDATE()',
+        'SELECT COUNT(*) as total FROM reservas WHERE salon_id = ? AND fecha_reserva >= CURDATE()',
         [id]
       );
       

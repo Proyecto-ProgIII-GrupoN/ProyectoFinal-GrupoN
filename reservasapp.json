@@ -28,6 +28,36 @@
     },
     {
       "type": "http",
+      "name": "Buscar Salon",
+      "seq": 10,
+      "request": {
+        "url": "{{apiUrl}}/api/v1/salones?q=hermosa sala",
+        "method": "GET",
+        "headers": [],
+        "params": [
+          {
+            "name": "q",
+            "value": "hermosa sala",
+            "type": "query",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "none",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "",
+        "auth": {
+          "mode": "none"
+        }
+      }
+    },
+    {
+      "type": "http",
       "name": "Crear Salon Nuevo",
       "seq": 6,
       "request": {
@@ -55,13 +85,13 @@
       "name": "Eliminar Salon (Soft Delete)",
       "seq": 8,
       "request": {
-        "url": "{{apiUrl}}/salones/5",
+        "url": "{{apiUrl}}/api/v1/salones/1",
         "method": "DELETE",
         "headers": [],
         "params": [],
         "body": {
           "mode": "json",
-          "json": "/Falta esto",
+          "json": "",
           "formUrlEncoded": [],
           "multipartForm": []
         },
@@ -123,13 +153,26 @@
     },
     {
       "type": "http",
-      "name": "Traer Salon Por ID",
-      "seq": 5,
+      "name": "Ordenar Salones Por Importe",
+      "seq": 11,
       "request": {
-        "url": "{{apiUrl}}/api/v1/salones/1",
+        "url": "{{apiUrl}}/api/v1/salones?sortBy=importe&sortOrder=DESC",
         "method": "GET",
         "headers": [],
-        "params": [],
+        "params": [
+          {
+            "name": "sortBy",
+            "value": "importe",
+            "type": "query",
+            "enabled": true
+          },
+          {
+            "name": "sortOrder",
+            "value": "DESC",
+            "type": "query",
+            "enabled": true
+          }
+        ],
         "body": {
           "mode": "none",
           "formUrlEncoded": [],
@@ -146,10 +189,10 @@
     },
     {
       "type": "http",
-      "name": "Traer todos los salones activos",
-      "seq": 4,
+      "name": "Traer Salon Por ID",
+      "seq": 5,
       "request": {
-        "url": "{{apiUrl}}/api/v1/salones",
+        "url": "{{apiUrl}}/api/v1/salones/1",
         "method": "GET",
         "headers": [],
         "params": [],
@@ -205,56 +248,13 @@
     },
     {
       "type": "http",
-      "name": "Buscar Salon",
-      "seq": 10,
+      "name": "Traer todos los salones activos",
+      "seq": 4,
       "request": {
-        "url": "{{apiUrl}}/api/v1/salones?q=hermosa sala",
+        "url": "{{apiUrl}}/api/v1/salones",
         "method": "GET",
         "headers": [],
-        "params": [
-          {
-            "name": "q",
-            "value": "hermosa sala",
-            "type": "query",
-            "enabled": true
-          }
-        ],
-        "body": {
-          "mode": "none",
-          "formUrlEncoded": [],
-          "multipartForm": []
-        },
-        "script": {},
-        "vars": {},
-        "assertions": [],
-        "tests": "",
-        "auth": {
-          "mode": "none"
-        }
-      }
-    },
-    {
-      "type": "http",
-      "name": "Ordenar Salones Por Importe",
-      "seq": 11,
-      "request": {
-        "url": "{{apiUrl}}/api/v1/salones?sortBy=importe&sortOrder=DESC",
-        "method": "GET",
-        "headers": [],
-        "params": [
-          {
-            "name": "sortBy",
-            "value": "importe",
-            "type": "query",
-            "enabled": true
-          },
-          {
-            "name": "sortOrder",
-            "value": "DESC",
-            "type": "query",
-            "enabled": true
-          }
-        ],
+        "params": [],
         "body": {
           "mode": "none",
           "formUrlEncoded": [],
@@ -270,7 +270,7 @@
       }
     }
   ],
-  "activeEnvironmentUid": "SutPhpqHPlti1VoFpB8Ib",
+  "activeEnvironmentUid": "dYMq9monLXmst8cIBnubg",
   "environments": [
     {
       "variables": [
