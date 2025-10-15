@@ -1,54 +1,37 @@
 import SalonesService from "../services/salonesService.js";
 
 export default class SalonesController {
-<<<<<<< HEAD
-    constructor() {
-        this.salonesService = new SalonesService();
-=======
   constructor() {
     this.salonesService = new SalonesService();
   }
 
-  buscarTodos = async (_req, res) => {
+  buscarTodos = async (req, res) => {
     try {
-      const datos = await this.salonesService.buscarTodos();
-      res.json({ estado: true, datos });
-    } catch (err) {
-      console.log('Error al listar salones -->', err);
-      res.status(500).json({ estado: false, mensaje: 'El sistema experimentó una interrupción inesperada. Intente nuevamente.' });
->>>>>>> origin/developer
-    }
-
-<<<<<<< HEAD
-    buscarTodos = async (req, res) => {
-        try {
-            const { page = 1, limit = 10, q = '', activo = 1 } = req.query;
-
-            const result = await this.salonesService.buscarTodos({
-                page: Number(page),
-                limit: Number(limit),
-                q,
-                activo: Number(activo)
-            });
-
-            res.json({
-                estado: true,
-                datos: result.data,
-                meta: {
-                    page: Number(page),
-                    limit: Number(limit),
-                    total: result.total
-                }
-            });
-        } catch (err) {
-            console.error('Error al obtener salones:', err);
-            res.status(500).json({
-                estado: false,
-                mensaje: 'Error interno del servidor'
-            });
+      const { page = 1, limit = 10, q = '', activo = 1 } = req.query;
+      const result = await this.salonesService.buscarTodos({
+        page: Number(page),
+        limit: Number(limit),
+        q,
+        activo: Number(activo)
+      });
+      res.json({
+        estado: true,
+        datos: result.data,
+        meta: {
+          page: Number(page),
+          limit: Number(limit),
+          total: result.total
         }
+      });
+    } catch (err) {
+      console.error('Error al obtener salones:', err);
+      res.status(500).json({
+        estado: false,
+        mensaje: 'Error interno del servidor'
+      });
     }
-=======
+  }
+
   buscarPorId = async (req, res) => {
     try {
       const { id } = req.params;
@@ -85,14 +68,10 @@ export default class SalonesController {
       res.json({ estado: true, datos: actualizado });
     } catch (err) {
       console.log('Error al actualizar salón -->', err);
-      // Manejar error específico del service
       if (err.message === 'No existe el salon') {
         return res.status(404).json({ estado: false, mensaje: 'Recurso no encontrado: el salón indicado no está registrado en el sistema.' });
       }
       res.status(500).json({ estado: false, mensaje: 'La actualización no pudo completarse debido a un error interno. Intente más tarde.' });
     }
   }
-
-
->>>>>>> origin/developer
 }
