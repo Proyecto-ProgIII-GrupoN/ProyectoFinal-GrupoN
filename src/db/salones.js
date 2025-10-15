@@ -27,4 +27,20 @@ export default class Salones {
     );
     return rows[0];
   }
+
+  actualizarSalon=async(salon_id,datos)=>{
+    const camposActualizar = Object.keys(datos);
+    const valoresActualizar =Object.values(datos)
+    const setValores=camposActualizar.map(campo=>`${campo}=?`).join(',');
+    const parametros=[...valoresActualizar,salon_id];
+    const sql=`UPDATE salones SET ${setValores} WHERE salon_id=?`;
+    const[result]=await pool.execute(sql,parametros);
+    if(result.affectedRows===0){
+      return null;
+    }
+    return this.buscarPorId(salon_id);
+
+
+
+  }
 }

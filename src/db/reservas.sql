@@ -286,6 +286,52 @@ ALTER TABLE `usuarios`
   MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- Modificaciones de columnas creado y modificado
+--
+
+--
+-- Modificaciones para la tabla `salones`
+--
+ALTER TABLE `salones`
+  MODIFY `creado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  MODIFY `modificado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+--
+-- Modificaciones para la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `creado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  MODIFY `modificado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+--
+-- Modificaciones para la tabla `servicios`
+--
+ALTER TABLE `servicios`
+  MODIFY `creado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  MODIFY `modificado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+--
+-- Modificaciones para la tabla `turnos`
+--
+ALTER TABLE `turnos`
+  MODIFY `creado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  MODIFY `modificado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+--
+-- Modificaciones para la tabla `reservas_servicios`
+--
+ALTER TABLE `reservas_servicios`
+  MODIFY `creado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  MODIFY `modificado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+--
+-- Modificaciones para la tabla `reservas`
+--
+ALTER TABLE `reservas`
+  MODIFY `creado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  MODIFY `modificado` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+--
 -- Restricciones para tablas volcadas
 --
 
