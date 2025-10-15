@@ -98,4 +98,15 @@ export default class Salones {
         }
         return this.buscarPorId(salon_id);
     }
+
+    eliminarSalon = async (salon_id) => {
+        const [result] = await pool.execute(
+            'UPDATE salones SET activo = 0 WHERE salon_id = ?',
+            [salon_id]
+        );
+        if (result.affectedRows === 0) {
+            return null;
+        }
+        return this.buscarPorId(salon_id);
+    }
 }

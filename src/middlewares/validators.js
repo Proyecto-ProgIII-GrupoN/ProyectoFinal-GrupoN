@@ -1,4 +1,5 @@
 import { body, param, validationResult } from 'express-validator';
+import { pool } from '../db/conexion.js';
 
 const manejarErrores = (req, res, next) => {
   const errors = validationResult(req);
@@ -153,3 +154,4 @@ export const validatePaginacion = [
     next();
   }
 ];
+

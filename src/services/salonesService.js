@@ -20,4 +20,12 @@ export default class SalonesService {
         }
         return this.salones.actualizarSalon(salon_id, datos);  
     }
+
+    eliminarSalon = async (salon_id) => {
+        const existe = await this.salones.buscarPorId(salon_id);
+        if (!existe) {
+            throw new Error('No existe el salon');
+        }
+        return this.salones.eliminarSalon(salon_id);
+    }
 }
