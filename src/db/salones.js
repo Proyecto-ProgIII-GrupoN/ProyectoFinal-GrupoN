@@ -4,8 +4,8 @@ export default class Salones {
     buscarTodos = async ({ page = 1, limit = 10, q = '', activo = 1, sortBy = 'salon_id', sortOrder = 'ASC' }) => {
         // Validar y limitar parametros de paginacion
         const pageNum = Math.max(1, parseInt(page) || 1);
-        const limitNum = Math.min(100, Math.max(1, parseInt(limit) || 10)); // max 100 registros por pagina
-        const offset = (pageNum - 1) * limitNum;
+        const limitNum = Number(Math.min(100, Math.max(1, parseInt(limit) || 10))); // max 100 registros por pagina
+        const offset = Number((pageNum - 1) * limitNum);
 
         // Validar campos de ordenamiento permitidos
         const allowedSortFields = ['salon_id', 'titulo', 'importe', 'creado', 'modificado'];
@@ -38,15 +38,15 @@ export default class Salones {
             FROM salones
             ${filtros}
             ORDER BY ${sortField} ${sortDir}
-            LIMIT ? OFFSET ?`;
+            LIMIT ${limitNum} OFFSET ${offset}`;
 
         // Consulta para contar el total de registros
         const sqlTotal = `SELECT COUNT(*) AS total FROM salones ${filtros}`;
 
         try {
-            // Ejecutar ambas consultas en paralelo para mejor rendimiento
+            // Ejecutar ambas consultas en paralelo 
             const [dataResult, totalResult] = await Promise.all([
-                pool.execute(sqlData, [...params, limitNum, offset]),
+                pool.execute(sqlData, params),
                 pool.execute(sqlTotal, params)
             ]);
 
