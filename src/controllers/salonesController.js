@@ -7,27 +7,47 @@ export default class SalonesController {
 
   buscarTodos = async (req, res) => {
     try {
-      const { page = 1, limit = 10, q = '', activo = 1 } = req.query;
+      // sacar y chequear los params con defaults seguros
+      const {
+        page = 1,
+        limit = 10,
+        q = '',
+        activo = 1,
+        sortBy = 'salon_id',
+        sortOrder = 'ASC'
+      } = req.query;
+
+      // mas validaciones en el controller
+      const pageNum = Math.max(1, parseInt(page) || 1);
+      const limitNum = Math.min(100, Math.max(1, parseInt(limit) || 10));
+      const activoNum = parseInt(activo) === 1 ? 1 : 0;
+
       const result = await this.salonesService.buscarTodos({
-        page: Number(page),
-        limit: Number(limit),
-        q,
-        activo: Number(activo)
+        page: pageNum,
+        limit: limitNum,
+        q: q.toString().trim(),
+        activo: activoNum,
+        sortBy,
+        sortOrder
       });
+
       res.json({
         estado: true,
         datos: result.data,
         meta: {
-          page: Number(page),
-          limit: Number(limit),
-          total: result.total
+          page: result.page,
+          limit: result.limit,
+          total: result.total,
+          totalPages: result.totalPages,
+          hasNextPage: result.page < result.totalPages,
+          hasPrevPage: result.page > 1
         }
       });
     } catch (err) {
       console.error('Error al obtener salones:', err);
       res.status(500).json({
         estado: false,
-        mensaje: 'Error interno del servidor'
+        mensaje: 'Error interno del servidor al consultar salones'
       });
     }
   }
