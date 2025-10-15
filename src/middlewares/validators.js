@@ -153,3 +153,39 @@ export const validatePaginacion = [
     next();
   }
 ];
+
+// middleware pa validar eliminacion de salon
+export const validateEliminarSalon = [
+  // chequear que el id sea valido
+  param('id')
+    .isInt({ gt: 0 })
+    .withMessage('El ID del salón tiene que ser un entero positivo.'),
+  
+  // chequear que no tenga reservas activas
+  async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const [reservas] = await pool.execute(
+        'SELECT COUNT(*) as total FROM reservas WHERE salon_id = ? AND fecha >= CURDATE()',
+        [id]
+      );
+      
+      if (reservas[0].total > 0) {
+        return res.status(400).json({
+          estado: false,
+          mensaje: 'No se puede eliminar el salón porque tiene reservas activas'
+        });
+      }
+      
+      next();
+    } catch (error) {
+      console.error('Error al verificar reservas:', error);
+      return res.status(500).json({
+        estado: false,
+        mensaje: 'Error al validar eliminación'
+      });
+    }
+  },
+  
+  manejarErrores
+];
