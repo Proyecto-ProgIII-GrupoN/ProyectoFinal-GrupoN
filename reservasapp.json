@@ -5,7 +5,7 @@
     {
       "type": "http",
       "name": "Actualizar Datos de Un Salon",
-      "seq": 7,
+      "seq": 1,
       "request": {
         "url": "{{apiUrl}}/api/v1/salones/5",
         "method": "PUT",
@@ -29,7 +29,7 @@
     {
       "type": "http",
       "name": "Buscar Salon",
-      "seq": 10,
+      "seq": 2,
       "request": {
         "url": "{{apiUrl}}/api/v1/salones?q=hermosa sala",
         "method": "GET",
@@ -59,7 +59,7 @@
     {
       "type": "http",
       "name": "Crear Salon Nuevo",
-      "seq": 6,
+      "seq": 3,
       "request": {
         "url": "{{apiUrl}}/api/v1/salones/",
         "method": "POST",
@@ -83,7 +83,7 @@
     {
       "type": "http",
       "name": "Eliminar Salon (Soft Delete)",
-      "seq": 8,
+      "seq": 4,
       "request": {
         "url": "{{apiUrl}}/api/v1/salones/1",
         "method": "DELETE",
@@ -107,7 +107,7 @@
     {
       "type": "http",
       "name": "Estado del Servidor",
-      "seq": 2,
+      "seq": 5,
       "request": {
         "url": "{{apiUrl}}/estado",
         "method": "GET",
@@ -130,7 +130,7 @@
     {
       "type": "http",
       "name": "Notificacion",
-      "seq": 3,
+      "seq": 6,
       "request": {
         "url": "{{apiUrl}}/notificacion",
         "method": "POST",
@@ -154,7 +154,7 @@
     {
       "type": "http",
       "name": "Ordenar Salones Por Importe",
-      "seq": 11,
+      "seq": 7,
       "request": {
         "url": "{{apiUrl}}/api/v1/salones?sortBy=importe&sortOrder=DESC",
         "method": "GET",
@@ -190,7 +190,7 @@
     {
       "type": "http",
       "name": "Traer Salon Por ID",
-      "seq": 5,
+      "seq": 8,
       "request": {
         "url": "{{apiUrl}}/api/v1/salones/1",
         "method": "GET",
@@ -249,7 +249,7 @@
     {
       "type": "http",
       "name": "Traer todos los salones activos",
-      "seq": 4,
+      "seq": 10,
       "request": {
         "url": "{{apiUrl}}/api/v1/salones",
         "method": "GET",
@@ -268,7 +268,123 @@
           "mode": "none"
         }
       }
-    }
+    },
+    {
+        "type": "http",
+        "name": "Crear servicio",
+        "seq": 11,
+        "request": {
+            "url": "{{apiUrl}}/api/v1/servicios",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+                "mode": "json",
+                "json": {
+                    "descripcion": "Servicio de DJ",
+                    "importe": 17000
+                }
+            },
+            "auth": { 
+                "mode": "none"
+            }
+        }
+    },
+    {
+        "type": "http",
+        "name": "Actualizar servicio",
+        "seq": 12,
+        "request": {
+            "url": "{{apiUrl}}/api/v1/servicios/5",
+            "method": "PUT",
+            "headers": [],
+            "params": [],
+            "body": {
+                "mode": "json",
+                "json": {
+                    "descripcion": "Servicio de DJ muy pro",
+                    "importe": 19560
+                }
+            },
+            "auth": { 
+                "mode": "none"
+            }
+        }
+    },
+    {
+        "type": "http",
+        "name": "Eliminar servicio",
+        "seq": 13,
+        "request": {
+            "url": "{{apiUrl}}/api/v1/servicios/5",
+            "method": "DELETE",
+            "headers": [],
+            "params": [],
+            "body": {
+                "mode": "none"
+            },
+            "auth": { 
+                "mode": "none"
+            }
+        }
+    },
+    {
+        "type": "http",
+        "name": "Buscar servicio por palabra",
+        "seq": 14,
+        "request": {
+            "url": "{{apiUrl}}/api/v1/servicios?q=DJ",
+            "method": "GET",
+            "headers": [],
+            "params": [
+                { "name": "q", "value": "DJ", "type": "query", "enabled": true}
+            ],
+            "body": {
+                "mode": "none"
+            },
+            "auth": { 
+                "mode": "none"
+            }
+        }
+    },
+    {
+        "type": "http",
+        "name": "Mostrar Servicios",
+        "seq": 15,
+        "request": {
+            "url": "{{apiUrl}}/api/v1/servicios",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+                "mode": "none"
+            },
+            "auth": { 
+                "mode": "none"
+            }
+        }
+    },
+    {
+        "type": "http",
+        "name": "Mostrar servicios por paginacion",
+        "seq": 16,
+        "request": {
+            "url": "{{apiUrl}}/api/v1/servicios?page=1&limit=10",
+            "method": "GET",
+            "headers": [],
+            "params": [
+                { "name": "page", "value": "1", "type": "query", "enabled": true},
+                { "name": "limit", "value": "10", "type": "query", "enabled": true}
+            ],
+            "body": {
+                "mode": "none"
+            },
+            "auth": { 
+                "mode": "none"
+            }
+        }
+    },
+
   ],
   "activeEnvironmentUid": "dYMq9monLXmst8cIBnubg",
   "environments": [
