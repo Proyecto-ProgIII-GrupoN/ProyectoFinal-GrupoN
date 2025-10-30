@@ -1,0 +1,70 @@
+Autenticación:
+
+Esta API usa JWT para proteger rutas sensibles y control de roles.
+
+Variables de entorno requeridas
+
+En tu .env agregá (o verificá) estas claves:
+
+JWT_SECRET=poné_un_secreto_largo_y_aleatorio
+JWT_EXPIRES_IN=1h
+
+Endpoint de login
+POST /api/v1/auth/login
+
+
+Body JSON:
+
+{
+  "nombre_usuario": "prueba-admin@demo.com",
+  "contrasenia": "Admin123!"
+}
+
+
+Respuesta:
+
+{ "estado": true, "token": "..." }
+
+
+Usá el token en cada request protegida con el header:
+
+Authorization: Bearer <TOKEN>
+
+Roles y permisos (resumen)
+
+cliente (3): puede crear y ver sus reservas. No administra salones.
+
+empleado (2): puede gestionar salones/servicios/turnos.
+
+admin (1): acceso total (usuarios, reservas, reportes, etc.).
+
+Rutas protegidas (ejemplos)
+
+POST /api/v1/salones → admin / empleado
+
+PUT /api/v1/salones/:id → admin / empleado
+
+DELETE /api/v1/salones/:id → admin (borrado lógico si no tiene reservas futuras)
+
+Pruebas rápidas (curl)
+
+Login (capturar token con jq):
+
+TOKEN=$(curl -s -X POST http://localhost:3000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"nombre_usuario":"prueba-admin@demo.com","contrasenia":"Admin123!"}' | jq -r .token)
+echo $TOKEN
+
+Crear salón (protegido):
+
+curl -s -X POST http://localhost:3000/api/v1/salones \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"titulo":"Salón Centro","direccion":"Av. Siempre Viva 123","capacidad":50,"importe":120000}'
+
+
+Errores esperados:
+
+401 sin token → Unauthorized
+
+403 con rol insuficiente → { "estado": false, "mensaje": "No autorizado" }

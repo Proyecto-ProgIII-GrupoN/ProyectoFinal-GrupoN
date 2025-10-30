@@ -192,3 +192,95 @@ export const validateEliminarSalon = [
   manejarErrores
 ];
 
+export const ensureSalonExisteActivo = [
+  param('id').isInt({ gt: 0 }).withMessage('El ID del salón tiene que ser un entero positivo.'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const [rows] = await pool.execute(
+        'SELECT salon_id FROM salones WHERE salon_id = ? AND activo = 1',
+        [id]
+      );
+      if (rows.length === 0) {
+        return res.status(404).json({
+          estado: false,
+          mensaje: 'Salón no encontrado o inactivo'
+        });
+      }
+      next();
+    } catch (err) {
+      console.error('Error ensureSalonExisteActivo:', err);
+      res.status(500).json({ estado: false, mensaje: 'Error al validar el salón' });
+    }
+  }
+];
+
+export const ensureSalonUnicoAlCrear = async (req, res, next) => {
+  try {
+    const { titulo, direccion } = req.body;
+    const [dup] = await pool.execute(
+      'SELECT 1 FROM salones WHERE LOWER(titulo)=LOWER(?) AND LOWER(direccion)=LOWER(?) LIMIT 1',
+      [titulo, direccion]
+    );
+    if (dup.length) {
+      return res.status(409).json({
+        estado: false,
+        mensaje: 'Ya existe un salón con ese título y dirección'
+      });
+    }
+    next();
+  } catch (err) {
+    console.error('Error ensureSalonUnicoAlCrear:', err);
+    res.status(500).json({ estado: false, mensaje: 'Error al validar unicidad' });
+  }
+};
+
+export const ensureSalonUnicoAlActualizar = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { titulo, direccion } = req.body;
+
+    const [actualRows] = await pool.execute(
+      'SELECT titulo, direccion FROM salones WHERE salon_id = ?',
+      [id]
+    );
+    if (!actualRows.length) {
+      return res.status(404).json({ estado: false, mensaje: 'Salón no encontrado' });
+    }
+
+    const t = (titulo ?? actualRows[0].titulo);
+    const d = (direccion ?? actualRows[0].direccion);
+
+    const [dup] = await pool.execute(
+      'SELECT 1 FROM salones WHERE LOWER(titulo)=LOWER(?) AND LOWER(direccion)=LOWER(?) AND salon_id <> ? LIMIT 1',
+      [t, d, id]
+    );
+    if (dup.length) {
+      return res.status(409).json({
+        estado: false,
+        mensaje: 'Ya existe otro salón con ese título y dirección'
+      });
+    }
+    next();
+  } catch (err) {
+    console.error('Error ensureSalonUnicoAlActualizar:', err);
+    res.status(500).json({ estado: false, mensaje: 'Error al validar unicidad' });
+  }
+};
+
+export const aplicarDefaultsLista = (req, _res, next) => {
+  if (req.query.page === undefined) req.query.page = 1;
+  if (req.query.limit === undefined) req.query.limit = 10;
+  if (!req.query.sortBy) req.query.sortBy = 'salon_id';
+  if (!req.query.sortOrder) req.query.sortOrder = 'ASC';
+  if (req.query.q) req.query.q = String(req.query.q).trim().slice(0, 100);
+  next();
+};
+
+export const requireRole = (roles = []) => (req, res, next) => {
+  const tipo = req.user?.tipo_usuario; // ej: 'admin' | 'empleado' | 'cliente'
+  if (!tipo || !roles.includes(tipo)) {
+    return res.status(403).json({ estado: false, mensaje: 'No autorizado' });
+  }
+  next();
+};
