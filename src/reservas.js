@@ -1,8 +1,8 @@
 import express from 'express';
 import passport from 'passport';
 import './auth/passport.js';
-import { router as v1SalonesRoutes } from './v1/routes/salonesRoutes.js';
-import { router as v1ServiciosRoutes } from './v1/routes/serviciosRoutes.js';
+import v1SalonesRoutes from './v1/routes/salonesRoutes.js';
+import v1ServiciosRoutes from './v1/routes/serviciosRoutes.js';
 import { router as v1AuthRoutes } from './v1/routes/authRoutes.js';
 
 const app = express();
