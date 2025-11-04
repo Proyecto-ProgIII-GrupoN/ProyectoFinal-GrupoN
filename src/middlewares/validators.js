@@ -317,3 +317,37 @@ export const requireRole = (roles = []) => (req, res, next) => {
     }
     next();
 };
+
+
+export const validateReservaId = [
+    param('id')
+        .isInt({ gt: 0 })
+        .withMessage('El ID de la reserva debe ser un número entero positivo.'),
+    manejarErrores
+];
+
+export const validateActualizarReserva = [
+    body('tematica')
+        .optional()
+        .isString().withMessage('La temática debe ser texto.')
+        .isLength({ min: 3, max: 255 }).withMessage('La temática debe tener entre 3 y 255 caracteres.')
+        .trim(),
+    body('foto_cumpleaniero')
+        .optional({ nullable: true }) 
+        .isURL().withMessage('La foto debe ser una URL válida.')
+        .trim(),
+    body('importe_salon')
+        .optional()
+        .isFloat({ min: 0 }).withMessage('El importe del salón debe ser un número positivo.'),
+    body('reserva_id').not().exists().withMessage('No se puede modificar el ID.'),
+    body('usuario_id').not().exists().withMessage('No se puede cambiar el propietario de la reserva.'),
+    body('importe_total').not().exists().withMessage('El importe total se calcula automáticamente.'),
+    manejarErrores
+];
+
+export const validateServicioEnReserva = [
+    body('servicio_id')
+        .exists({ checkFalsy: true }).withMessage('Falta el servicio_id.')
+        .isInt({ gt: 0 }).withMessage('El servicio_id debe ser un número entero positivo.'),
+    manejarErrores
+];
