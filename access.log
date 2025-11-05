@@ -1,0 +1,4 @@
+::1 - - [05/Nov/2025:02:33:18 +0000] "GET /estado HTTP/1.1" 200 11 "-" "bruno-runtime/1.29.1"
+::1 - - [05/Nov/2025:02:33:23 +0000] "GET /api/v1/salones/1 HTTP/1.1" 200 245 "-" "bruno-runtime/1.29.1"
+::1 - - [05/Nov/2025:02:33:28 +0000] "GET /api/v1/salones HTTP/1.1" 200 2263 "-" "bruno-runtime/1.29.1"
+::1 - - [05/Nov/2025:02:33:32 +0000] "POST /api/v1/salones/ HTTP/1.1" 401 55 "-" "bruno-runtime/1.29.1"

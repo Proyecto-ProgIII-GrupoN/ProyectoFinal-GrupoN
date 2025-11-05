@@ -1,0 +1,1122 @@
+{
+  "name": "ReservarSalonesApp",
+  "version": "1",
+  "items": [
+    {
+      "type": "folder",
+      "name": "AutenticaciónLogin",
+      "items": [
+        {
+          "type": "http",
+          "name": "AdminAuth",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/api/v1/auth/login",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"nombre_usuario\": \"admisalones@gmail.com\",\n  \"contrasenia\": \"admi123*\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "ClienteAuth",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/api/v1/auth/login",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"nombre_usuario\": \"clientereservas@outlook.com\",\n  \"contrasenia\": \"cli123***\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EmpleadoAuth",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/api/v1/auth/login",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "\n{\n  \"nombre_usuario\": \"empeadoreservas@gmail.com\",\n  \"contrasenia\": \"emp123***\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "UsuariosBreadParaAdmin",
+      "items": [
+        {
+          "type": "http",
+          "name": "Actualiza un usuario existente",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:3000/api/v1/usuarios/1",
+            "method": "PUT",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"nombre\": \"Juan Carlos\",\n  \"celular\": \"9876543210\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA1NzA1OSwiZXhwIjoxNzYyMDg1ODU5fQ.wM2FNBlPYc96FgRzn6Ff7QlA8jVcG0TRv7Sg9KQDoPE"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Crear un nuevo usuario",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:3000/api/v1/usuarios",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"nombre\": \"Juan\",\n  \"apellido\": \"Pérez\",\n  \"nombre_usuario\": \"juanperez@correo.com\",\n  \"contrasenia\": \"password123\",\n  \"tipo_usuario\": 3,\n  \"celular\": \"1234567890\",\n  \"foto\": \"https://ejemplo.com/foto.jpg\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA1Njk0NSwiZXhwIjoxNzYyMDg1NzQ1fQ.-VlL0jFreA4RXakdIznkE3QdVMBxYey9dwPz4Gbs9K4"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Elimina un usuario (soft delete - marca `activo = 0`)",
+          "seq": 7,
+          "request": {
+            "url": "http://localhost:3000/api/v1/usuarios/1",
+            "method": "DELETE",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA1NzE1MSwiZXhwIjoxNzYyMDg1OTUxfQ.UDfjgp_fHE8DF1UcNNOByb7rwpwX-DZUROlvl8Q9yI4"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Lista todos los usuarios con paginación y filtros ADMIN",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/api/v1/usuarios?page=1&limit=10&sortBy=nombre&sortOrder=ASC",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "sortBy",
+                "value": "nombre",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "sortOrder",
+                "value": "ASC",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA1NjE4NiwiZXhwIjoxNzYyMDg0OTg2fQ.1oJHB4Z-if9y9oEBmAd4SDKCFHGSpw62WPmx8m9T0xQ"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Obtener un usuario por su ID  (PermisoSoloAdmin)",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:3000/api/v1/usuarios/1",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA1Njc2MSwiZXhwIjoxNzYyMDg1NTYxfQ.N0khKS8raNuDg75waqruu8-fw6HAhK-5Pvo35NmnL9k"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "TraerTodosLosClientes(LohaceADMIN+EMPLEADO)",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/api/v1/usuarios/clientes",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyLCJyb2wiOjIsImlhdCI6MTc2MjA1NjUzMSwiZXhwIjoxNzYyMDg1MzMxfQ.Xb22MRZniGFHXhyEl6Ah_ra81X8XdNRyS-zJKJ7symY"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "TraerUsuarioPorTipodeUsarioId3SonClientes",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/api/v1/usuarios?tipo_usuario=3",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "tipo_usuario",
+                "value": "3",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA1NjMxNCwiZXhwIjoxNzYyMDg1MTE0fQ.oJ-FUFb_AlCqkbCQLSG8FABq0JzfTlnW_M2GWztH_dQ"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "apisSalones",
+      "items": [
+        {
+          "type": "http",
+          "name": "Actualizar Datos de Un Salon",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones/5",
+            "method": "PUT",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"titulo\": \"Salon  pro\",\n  \"direccion\": \"Av. Siempre Viva 742\",\n  \"capacidad\": 555555,\n  \"importe\": 150000\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA0Njg3OSwiZXhwIjoxNzYyMDc1Njc5fQ.81zQ_THBXY4AWecE4-cLwfznDEFIXc46ToZWWEApUD4"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Buscar Salon",
+          "seq": 9,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones?q=hermosa sala",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "q",
+                "value": "hermosa sala",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Crear Salon Nuevo",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones/",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"titulo\": \"Nuevo Salón5\",\n  \"direccion\": \"Av. Principal 123\",\n  \"importe\": 95000.00,\n  \"capacidad\": 200,\n  \"latitud\": -34.6037,\n  \"longitud\": -58.3816\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjIxOTgxMSwiZXhwIjoxNzYyMjQ4NjExfQ.z9cLznX7BnO7e2K6srSAfiu7BZVSzOO09RxBvC9DjLA"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Eliminar Salon (Soft Delete)",
+          "seq": 7,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones/1",
+            "method": "DELETE",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA0Njg3OSwiZXhwIjoxNzYyMDc1Njc5fQ.81zQ_THBXY4AWecE4-cLwfznDEFIXc46ToZWWEApUD4"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Estado del Servidor",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/estado",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Notificacion",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/notificacion",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"fecha\": \"2025-10-15\",\n  \"salon\": \"Salón Principal\",\n  \"turno\": \"Mañana 10:00-12:00\",\n  \"correoDestino\": \"test@gmail.com\"\n}\n\n//Para mas adelante lo configuramos bien ",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Ordenar Salones Por Importe",
+          "seq": 10,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones?sortBy=importe&sortOrder=DESC",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "sortBy",
+                "value": "importe",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "sortOrder",
+                "value": "DESC",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Traer Salon Por ID",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones/1",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Traer Salones Por paginacion",
+          "seq": 8,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones?page=1&limit=10",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Traer todos los salones activos",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:3000/api/v1/salones",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "apisServicios",
+      "items": [
+        {
+          "type": "http",
+          "name": "Actualizar-ModificarServicio",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:3000/api/v1/servicios/1",
+            "method": "PUT",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\"descripcion\":\"New cosa lo que sea nuevamente \"}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "AgregarServicio",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:3000/api/v1/servicios",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\"descripcion\":\"Estacionamiento\",\"importe\":2000}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "BorrarServico-SoftDelete",
+          "seq": 7,
+          "request": {
+            "url": "http://localhost:3000/api/v1/servicios/1",
+            "method": "DELETE",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "BuscarServicioPorNombre",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:3000/api/v1/servicios?q=estacionamiento",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "q",
+                "value": "estacionamiento",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "GetServicioPorId",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/api/v1/servicios/3",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "GetTodosLosServicios",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/api/v1/servicios",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "PaginacionOrden",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/api/v1/servicios?page=1&limit=5&sortBy=importe&sortOrder=DESC",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "limit",
+                "value": "5",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "sortBy",
+                "value": "importe",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "sortOrder",
+                "value": "DESC",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "apisTurnos",
+      "items": [
+        {
+          "type": "http",
+          "name": "CrearTurno",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:3000/api/v1/turnos",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"orden\": 1,\n  \"hora_desde\": \"10:00\",\n  \"hora_hasta\": \"12:00\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EliminiarTurnoSoft",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:3000/api/v1/turnos/1",
+            "method": "DELETE",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Modificar-ActualizarTurno",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:3000/api/v1/turnos/1",
+            "method": "PUT",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"hora_desde\": \"12:00\",\n  \"hora_hasta\": \"15:00\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "TraerTurnoPorID",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/api/v1/turnos/1",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "TraerTurnosPorOrden",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/api/v1/turnos?page=1&limit=10&sortBy=orden&sortOrder=ASC",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "limit",
+                "value": "10",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "sortBy",
+                "value": "orden",
+                "type": "query",
+                "enabled": true
+              },
+              {
+                "name": "sortOrder",
+                "value": "ASC",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "traerTodosTurnos",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/api/v1/turnos",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "reservasSalonesServicios",
+      "items": [
+        {
+          "type": "http",
+          "name": "Actualiza una reserva existentePorAdmin",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:3000/api/v1/reservas/1",
+            "method": "PUT",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"tematica\": \"Piratas\",\n  \"fecha_reserva\": \"2025-11-20\",\n  \"servicios\": [\n    {\n      \"servicio_id\": 3,\n      \"importe\": 5000.00\n    }\n  ]\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA0ODc1NCwiZXhwIjoxNzYyMDc3NTU0fQ.auHGjk1_r-Gll5eIFM2OnxhiJmKgY5ow4qwM8bIDO58"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EliminarReservaPorAdminSoftDelete",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:3000/api/v1/reservas/1",
+            "method": "DELETE",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA0ODc1NCwiZXhwIjoxNzYyMDc3NTU0fQ.auHGjk1_r-Gll5eIFM2OnxhiJmKgY5ow4qwM8bIDO58"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "ReservarCrearReservaClienteAdmin",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/api/v1/reservas",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"fecha_reserva\": \"2025-11-15\",\n  \"salon_id\": 1,\n  \"turno_id\": 2,\n  \"tematica\": \"Superhéroes\",\n  \"foto_cumpleaniero\": \"https://ejemplo.com/foto.jpg\",\n  \"servicios\": [\n    {\n      \"servicio_id\": 1,\n      \"importe\": 15000.00\n    },\n    {\n      \"servicio_id\": 2,\n      \"importe\": 25000.00\n    }\n  ]\n}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzLCJyb2wiOjMsImlhdCI6MTc2MjA1MjA0NiwiZXhwIjoxNzYyMDgwODQ2fQ.n-oVD0HLbIML8j6eG1sNDHl4oJrK0i0tH5nRn-Wl2lM"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "TraerReservaPorId",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/api/v1/reservas/1",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjA0ODc1NCwiZXhwIjoxNzYyMDc3NTU0fQ.auHGjk1_r-Gll5eIFM2OnxhiJmKgY5ow4qwM8bIDO58"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Trarer todasREservas",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/api/v1/reservas",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": ""
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "environments": [
+    {
+      "variables": [
+        {
+          "name": "apiUrl",
+          "value": "http://localhost:3000",
+          "enabled": false,
+          "secret": false,
+          "type": "text"
+        }
+      ],
+      "name": "prog3"
+    }
+  ],
+  "brunoConfig": {
+    "version": "1",
+    "name": "ReservarSalonesApp",
+    "type": "collection",
+    "ignore": [
+      "node_modules",
+      ".git"
+    ]
+  }
+}
