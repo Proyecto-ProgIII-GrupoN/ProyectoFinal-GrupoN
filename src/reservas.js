@@ -5,10 +5,7 @@ import path from 'path';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.js';
-
-
-
-
+import { fileURLToPath } from 'url';
 
 import { router as v1SalonesRoutes } from './v1/routes/salonesRoutes.js';
 import { router as v1ServiciosRoutes } from './v1/routes/serviciosRoutes.js';
@@ -19,10 +16,18 @@ import { router as v1AuthRoutes } from './v1/routes/authRoutes.js';
 
 const app = express();
 
+//frontend
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "public")));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "HTML", "index.html"));
+})
 
 //morgan
 const accessLogStream = fs.createWriteStream(path.join(process.cwd(), 'access.log'), { flags: 'a' });
-app.use(morgan('combined', { stream: accessLogStream })); 
+app.use(morgan('combined', { stream: accessLogStream }));
 app.use(morgan('combined'));
 app.use(express.json());
 
@@ -47,13 +52,13 @@ app.use(express.json());
  *                   example: true
  */
 app.get('/estado', (_req, res) => {
-  res.json({ ok: true });
+    res.json({ ok: true });
 });
 
 // Swagger UI - Documentación de la API
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'API Gestión de Reservas - Documentación'
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'API Gestión de Reservas - Documentación'
 }));
 
 
@@ -63,5 +68,7 @@ app.use('/api/v1/turnos', v1TurnosRoutes);
 app.use('/api/v1/reservas', v1ReservasRoutes);
 app.use('/api/v1/usuarios', v1UsuariosRoutes);
 app.use('/api/v1/auth', v1AuthRoutes);
+
+
 
 export default app;

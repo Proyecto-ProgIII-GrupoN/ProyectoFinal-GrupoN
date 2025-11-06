@@ -11,7 +11,7 @@ export default class ServiciosController {
             const result = await this.serviciosService.buscarTodos({ page, limit, activo, sortBy, sortOrder, q });
             res.json({
                 estado: true,
-                datos: result.data,
+                data: result.data,
                 meta: {
                     page: result.page,
                     limit: result.limit,
