@@ -144,5 +144,63 @@ export default class Reservas {
         }
         return this.buscarPorId(reserva_id);
     }
+
+    /**
+     * Obtiene todos los datos necesarios para enviar notificación al cliente y admin
+     * Incluye: datos de reserva, cliente, salón, turno y servicios
+     */
+    datosParaNotificacion = async (reserva_id) => {
+        const [rows] = await pool.execute(
+            `SELECT
+                r.reserva_id,
+                DATE_FORMAT(r.fecha_reserva, '%d/%m/%Y') as fecha_reserva,
+                r.tematica,
+                r.importe_salon,
+                r.importe_total,
+                s.titulo as salon_titulo,
+                s.direccion as salon_direccion,
+                DATE_FORMAT(t.hora_desde, '%H:%i') as hora_desde,
+                DATE_FORMAT(t.hora_hasta, '%H:%i') as hora_hasta,
+                u.nombre as cliente_nombre,
+                u.apellido as cliente_apellido,
+                u.nombre_usuario as cliente_email,
+                u.celular as cliente_celular
+            FROM reservas r
+            LEFT JOIN salones s ON r.salon_id = s.salon_id
+            LEFT JOIN turnos t ON r.turno_id = t.turno_id
+            LEFT JOIN usuarios u ON r.usuario_id = u.usuario_id
+            WHERE r.reserva_id = ? AND r.activo = 1`,
+            [reserva_id]
+        );
+        
+        if (rows.length === 0) {
+            return null;
+        }
+
+        const datosReserva = rows[0];
+        
+        // Obtener servicios asociados con sus importes
+        const [serviciosRows] = await pool.execute(
+            `SELECT s.descripcion, rs.importe
+            FROM reservas_servicios rs
+            LEFT JOIN servicios s ON rs.servicio_id = s.servicio_id
+            WHERE rs.reserva_id = ?`,
+            [reserva_id]
+        );
+
+        // Calcular subtotal de servicios
+        const subtotalServicios = serviciosRows.reduce((sum, s) => sum + parseFloat(s.importe || 0), 0);
+
+        // Formatear datos
+        return {
+            ...datosReserva,
+            cliente_nombre: `${datosReserva.cliente_nombre} ${datosReserva.cliente_apellido}`,
+            servicios: serviciosRows.map(s => ({ 
+                descripcion: s.descripcion,
+                importe: parseFloat(s.importe || 0)
+            })),
+            subtotal_servicios: subtotalServicios
+        };
+    }
 }
 

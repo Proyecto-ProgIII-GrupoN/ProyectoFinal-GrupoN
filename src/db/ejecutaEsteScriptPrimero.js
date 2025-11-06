@@ -25,6 +25,13 @@ const usuarios = [
         nombre_usuario: 'clientereservas@outlook.com',
         contrasenia: 'cli123***',
         tipo_usuario: 3 // Cliente
+    },
+    {
+        nombre: 'Cliente',
+        apellido: 'Reservas 2',
+        nombre_usuario: 'clientereservas@gmail.com',
+        contrasenia: 'cli123***',
+        tipo_usuario: 3 // Cliente
     }
 ];
 
@@ -33,22 +40,42 @@ async function crearUsuarios() {
         console.log('🚀 Creando usuarios del TP...\n');
 
         for (const usuario of usuarios) {
-            // Hashear contraseña con bcrypt
-            const salt = await bcrypt.genSalt(10);
-            const contrasenia_hash = await bcrypt.hash(usuario.contrasenia, salt);
+            try {
+                // Verificar si el usuario ya existe
+                const [existentes] = await pool.execute(
+                    'SELECT usuario_id FROM usuarios WHERE nombre_usuario = ?',
+                    [usuario.nombre_usuario]
+                );
 
-            // Insertar en BD
-            const [result] = await pool.execute(
-                'INSERT INTO usuarios (nombre, apellido, nombre_usuario, contrasenia, tipo_usuario, activo) VALUES (?, ?, ?, ?, ?, 1)',
-                [usuario.nombre, usuario.apellido, usuario.nombre_usuario, contrasenia_hash, usuario.tipo_usuario]
-            );
+                if (existentes.length > 0) {
+                    const rolNombre = usuario.tipo_usuario === 1 ? 'Admin' : usuario.tipo_usuario === 2 ? 'Empleado' : 'Cliente';
+                    console.log(`⏭️  ${rolNombre} ya existe (se omite):`);
+                    console.log(`   Email: ${usuario.nombre_usuario}`);
+                    console.log('');
+                    continue; // Saltar este usuario
+                }
 
-            const rolNombre = usuario.tipo_usuario === 1 ? 'Admin' : usuario.tipo_usuario === 2 ? 'Empleado' : 'Cliente';
-            console.log(`✅ ${rolNombre} creado:`);
-            console.log(`   ID: ${result.insertId}`);
-            console.log(`   Email: ${usuario.nombre_usuario}`);
-            console.log(`   Contraseña: ${usuario.contrasenia}`);
-            console.log('');
+                // Hashear contraseña con bcrypt
+                const salt = await bcrypt.genSalt(10);
+                const contrasenia_hash = await bcrypt.hash(usuario.contrasenia, salt);
+
+                // Insertar en BD
+                const [result] = await pool.execute(
+                    'INSERT INTO usuarios (nombre, apellido, nombre_usuario, contrasenia, tipo_usuario, activo) VALUES (?, ?, ?, ?, ?, 1)',
+                    [usuario.nombre, usuario.apellido, usuario.nombre_usuario, contrasenia_hash, usuario.tipo_usuario]
+                );
+
+                const rolNombre = usuario.tipo_usuario === 1 ? 'Admin' : usuario.tipo_usuario === 2 ? 'Empleado' : 'Cliente';
+                console.log(`✅ ${rolNombre} creado:`);
+                console.log(`   ID: ${result.insertId}`);
+                console.log(`   Email: ${usuario.nombre_usuario}`);
+                console.log(`   Contraseña: ${usuario.contrasenia}`);
+                console.log('');
+            } catch (error) {
+                const rolNombre = usuario.tipo_usuario === 1 ? 'Admin' : usuario.tipo_usuario === 2 ? 'Empleado' : 'Cliente';
+                console.error(`❌ Error al crear ${rolNombre} (${usuario.nombre_usuario}):`, error.message);
+                console.log('');
+            }
         }
 
         console.log('✨ Todos los usuarios creados exitosamente!\n');
@@ -60,10 +87,8 @@ async function crearUsuarios() {
 
         await pool.end();
     } catch (error) {
-        console.error('❌ Error:', error.message);
-        if (error.code === 'ER_DUP_ENTRY') {
-            console.log('⚠️  Algunos usuarios ya existen. Elimínalos primero si querés recrearlos.');
-        }
+        console.error('❌ Error general:', error.message);
+        await pool.end();
         process.exit(1);
     }
 }

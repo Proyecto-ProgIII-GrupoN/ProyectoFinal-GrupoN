@@ -112,6 +112,18 @@ export default class Usuarios {
         }
         return this.buscarPorId(usuario_id);
     }
+
+    /**
+     * Obtiene los correos de todos los administradores activos (tipo_usuario = 1)
+     * Retorna un array de correos
+     */
+    obtenerCorreosAdministradores = async () => {
+        const [rows] = await pool.execute(
+            'SELECT nombre_usuario FROM usuarios WHERE tipo_usuario = 1 AND activo = 1',
+            []
+        );
+        return rows.map(row => row.nombre_usuario);
+    }
 }
 
 

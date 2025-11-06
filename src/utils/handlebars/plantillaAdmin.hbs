@@ -1,0 +1,183 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Nueva Reserva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 650px;
+      margin: 20px auto;
+      padding: 25px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    header {
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    header h1 {
+      margin: 0;
+      color: #ff6b35;
+    }
+    .notification-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .info-section {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .info-row {
+      margin: 12px 0;
+      font-size: 16px;
+      color: #333;
+    }
+    .info-label {
+      font-weight: bold;
+      color: #555;
+      display: inline-block;
+      width: 150px;
+    }
+    .info-value {
+      color: #000;
+    }
+    .servicios-list {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    .servicios-list li {
+      margin: 5px 0;
+      color: #555;
+    }
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #666;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 10px;
+    }
+    .importe-total {
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff6b35;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px solid #ff6b35;
+    }
+    .desglose-costos {
+      background-color: #fff5f2;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .reserva-id {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="notification-icon">🔔</div>
+      <h1>Reservas de Salones de Cumpleaños 🎉</h1>
+    </header>
+
+    <h2>Nueva Reserva Realizada</h2>
+    <p>Se ha realizado una nueva reserva en el sistema. Detalles:</p>
+
+    <div class="reserva-id">
+      ID de Reserva: #{{reservaId}}
+    </div>
+
+    <div class="info-section">
+      <div class="info-row">
+        <span class="info-label">👤 Cliente:</span>
+        <span class="info-value">{{clienteNombre}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">📧 Email:</span>
+        <span class="info-value">{{clienteEmail}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">📱 Teléfono:</span>
+        <span class="info-value">{{clienteCelular}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">📅 Fecha de reserva:</span>
+        <span class="info-value">{{fecha}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">🏢 Salón:</span>
+        <span class="info-value">{{salon}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">📍 Dirección:</span>
+        <span class="info-value">{{direccion}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">⏰ Turno:</span>
+        <span class="info-value">{{turno}}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">🎭 Temática:</span>
+        <span class="info-value">{{tematica}}</span>
+      </div>
+      <div class="desglose-costos">
+        <h3 style="margin-top: 20px; margin-bottom: 15px; color: #ff6b35; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px;">💰 Desglose de Costos</h3>
+        
+        <div class="info-row" style="padding: 8px 0; border-bottom: 1px solid #e8e8e8;">
+          <span class="info-label">🏢 Salón:</span>
+          <span class="info-value" style="float: right;">{{importeSalon}}</span>
+        </div>
+        
+        {{#if tieneServicios}}
+        <div class="info-row" style="margin-top: 15px;">
+          <span class="info-label">🎁 Servicios adicionales:</span>
+        </div>
+        <div style="margin-left: 20px; margin-top: 10px;">
+          {{#each servicios}}
+          <div style="padding: 6px 0; border-bottom: 1px dotted #e8e8e8;">
+            <span style="color: #555;">{{this.descripcion}}</span>
+            <span style="float: right; color: #000; font-weight: 500;">{{this.importe}}</span>
+          </div>
+          {{/each}}
+        </div>
+        <div class="info-row" style="padding: 8px 0; margin-top: 10px; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8;">
+          <span class="info-label">📊 Subtotal Servicios:</span>
+          <span class="info-value" style="float: right;">{{subtotalServicios}}</span>
+        </div>
+        {{/if}}
+        
+        <div class="info-row importe-total" style="margin-top: 15px;">
+          <span class="info-label">💰 TOTAL:</span>
+          <span class="info-value" style="font-size: 22px;">{{importeTotal}}</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 20px; color: #666; font-size: 14px;">
+      Por favor, revisa la reserva en el sistema para confirmar los detalles y realizar el seguimiento correspondiente.
+    </p>
+
+    <footer>
+      &copy; 2025 Reservas de Salones de Cumpleaños - Sistema de Gestión
+    </footer>
+  </div>
+</body>
+</html>
+

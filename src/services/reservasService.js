@@ -1,13 +1,16 @@
 import Reservas from "../db/reservas.js";
 import ReservasServicios from "../db/reservas_servicios.js";
 import Salones from "../db/salones.js";
-import { pool } from "../db/conexion.js";
+import Usuarios from "../db/usuarios.js";
+import NotificacionesService from "./notificacionesService.js";
 
 export default class ReservasService {
     constructor() {
         this.reservas = new Reservas();
         this.reservasServicios = new ReservasServicios();
         this.salones = new Salones();
+        this.usuarios = new Usuarios();
+        this.notificacionesService = new NotificacionesService();
     }
 
     buscarTodos = (params) => {
@@ -62,6 +65,26 @@ export default class ReservasService {
         // Crear servicios asociados si hay
         if (servicios && servicios.length > 0) {
             await this.reservasServicios.crear(nuevaReserva.reserva_id, servicios);
+        }
+
+        // ENVIAR NOTIFICACIONES
+        try {
+            // Obtener datos completos de la reserva para notificación
+            const datosReserva = await this.reservas.datosParaNotificacion(nuevaReserva.reserva_id);
+            
+            if (datosReserva) {
+                // Enviar correo al cliente (confirmación)
+                await this.notificacionesService.enviarCorreoCliente(datosReserva);
+                
+                // Obtener correos de administradores y enviar notificación
+                const correosAdmin = await this.usuarios.obtenerCorreosAdministradores();
+                if (correosAdmin && correosAdmin.length > 0) {
+                    await this.notificacionesService.enviarCorreoAdmin(datosReserva, correosAdmin);
+                }
+            }
+        } catch (notificationError) {
+            // No fallar la creación de la reserva si falla la notificación
+            console.error('⚠️ Advertencia: No se pudieron enviar las notificaciones:', notificationError);
         }
 
         // Retornar reserva completa con servicios

@@ -1,0 +1,23 @@
+
+Mail de la empresa:
+salonreserva9@gmail.com
+reservaSalon*1
+-----------------------------------
+
+Admin
+admisalones@gmail.com
+admi123*
+
+------------------------------------
+Empleado
+empeadoreservas@gmail.com
+emp123***
+
+-----------------------------------
+Cliente  1
+clientereservas@outlook.com
+cli123***
+-------------------------------------
+Cliente 2
+clientereservas@gmail.com
+cli123***
