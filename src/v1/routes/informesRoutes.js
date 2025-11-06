@@ -60,7 +60,7 @@ const informesController = new InformesController();
  *                   example: false
  *                 mensaje:
  *                   type: string
- *                   example: Formato inválido. Formatos permitidos: pdf, csv
+ *                   example: "Formato inválido. Formatos permitidos: pdf, csv"
  *       401:
  *         description: No autenticado
  *       403:

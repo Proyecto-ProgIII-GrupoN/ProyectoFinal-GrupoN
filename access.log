@@ -1,0 +1,2 @@
+::1 - - [06/Nov/2025:23:55:49 +0000] "GET /api/v1/salones HTTP/1.1" 200 2263 "-" "bruno-runtime/1.29.1"
+::1 - - [06/Nov/2025:23:55:50 +0000] "GET /api/v1/salones HTTP/1.1" 200 2263 "-" "bruno-runtime/1.29.1"
