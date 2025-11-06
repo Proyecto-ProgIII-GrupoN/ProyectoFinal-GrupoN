@@ -82,6 +82,297 @@
     },
     {
       "type": "folder",
+      "name": "Endpoints de informes para Admins ",
+      "items": [
+        {
+          "type": "http",
+          "name": "Informe PDF",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/api/v1/informes?formato=pdf",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "formato",
+                "value": "pdf",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjQ1NTkwNywiZXhwIjoxNzYyNDg0NzA3fQ.rsRAf0C0SNaUMoBoiWLFr9YxrmxU-Vwi1nG4KanNEzk"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "nforme CSV",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/api/v1/informes?formato=csv",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "formato",
+                "value": "csv",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjQ1NjEzMiwiZXhwIjoxNzYyNDg0OTMyfQ.-rl9z4LBuGn8NTYkCcyhRoAkJ6ValN8uKOeaTiuzBEU"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "EstadisticasParaAdmin",
+      "items": [
+        {
+          "type": "http",
+          "name": "A-Estadisticas",
+          "seq": 7,
+          "request": {
+            "url": "http://localhost:3000/api/v1/estadisticas",
+            "method": "GET",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjQ1NTA5NCwiZXhwIjoxNzYyNDgzODk0fQ.qp2owTHmlzT1lrpKNSYCwNQk7nA4FWUbJKbX5Unf11w"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EstaPiriodo",
+          "seq": 4,
+          "request": {
+            "url": "http://localhost:3000/api/v1/estadisticas?tipo=periodo",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "tipo",
+                "value": "periodo",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EstadisticasGenerales",
+          "seq": 2,
+          "request": {
+            "url": "http://localhost:3000/api/v1/estadisticas?tipo=general",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "tipo",
+                "value": "general",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjQ1NDc4OSwiZXhwIjoxNzYyNDgzNTg5fQ.f-baIpahNsWK3sD_KFisJfbt0RdVx8CyHQ8-vznGL8k"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EstadisticasPorSalon",
+          "seq": 3,
+          "request": {
+            "url": "http://localhost:3000/api/v1/estadisticas?tipo=salon",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "tipo",
+                "value": "salon",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EstadisticasServicios",
+          "seq": 5,
+          "request": {
+            "url": "http://localhost:3000/api/v1/estadisticas?tipo=servicios",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "tipo",
+                "value": "servicios",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EstadisticasTodas",
+          "seq": 1,
+          "request": {
+            "url": "http://localhost:3000/api/v1/estadisticas?tipo=todas",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "tipo",
+                "value": "todas",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjQ1MzU1MywiZXhwIjoxNzYyNDgyMzUzfQ.s96HHX4qw9iT4jmYrVoryrdOArXQIflQWrAFB7NgLLI"
+              }
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "EstadísticasClientes",
+          "seq": 6,
+          "request": {
+            "url": "http://localhost:3000/api/v1/estadisticas?tipo=clientes",
+            "method": "GET",
+            "headers": [],
+            "params": [
+              {
+                "name": "tipo",
+                "value": "clientes",
+                "type": "query",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "auth": {
+              "mode": "none"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
       "name": "UsuariosBreadParaAdmin",
       "items": [
         {
@@ -442,30 +733,6 @@
         },
         {
           "type": "http",
-          "name": "Notificacion",
-          "seq": 2,
-          "request": {
-            "url": "http://localhost:3000/notificacion",
-            "method": "POST",
-            "headers": [],
-            "params": [],
-            "body": {
-              "mode": "json",
-              "json": "{\n  \"fecha\": \"2025-10-15\",\n  \"salon\": \"Salón Principal\",\n  \"turno\": \"Mañana 10:00-12:00\",\n  \"correoDestino\": \"test@gmail.com\"\n}\n\n//Para mas adelante lo configuramos bien ",
-              "formUrlEncoded": [],
-              "multipartForm": []
-            },
-            "script": {},
-            "vars": {},
-            "assertions": [],
-            "tests": "",
-            "auth": {
-              "mode": "none"
-            }
-          }
-        },
-        {
-          "type": "http",
           "name": "Ordenar Salones Por Importe",
           "seq": 10,
           "request": {
@@ -608,7 +875,10 @@
             "assertions": [],
             "tests": "",
             "auth": {
-              "mode": "none"
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjExLCJyb2wiOjEsImlhdCI6MTc2MjQ1MzY2NSwiZXhwIjoxNzYyNDgyNDY1fQ.bJiSg0ctyvZSilvtvWKTKI_l9H3gaW2RXQJHNwkTIeo"
+              }
             }
           }
         },

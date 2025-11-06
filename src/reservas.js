@@ -16,6 +16,8 @@ import { router as v1TurnosRoutes } from './v1/routes/turnosRoutes.js';
 import { router as v1ReservasRoutes } from './v1/routes/reservasRoutes.js';
 import { router as v1UsuariosRoutes } from './v1/routes/usuariosRoutes.js';
 import { router as v1AuthRoutes } from './v1/routes/authRoutes.js';
+import v1EstadisticasRoutes from './v1/routes/estadisticasRoutes.js';
+import v1InformesRoutes from './v1/routes/informesRoutes.js';
 
 const app = express();
 
@@ -63,5 +65,7 @@ app.use('/api/v1/turnos', v1TurnosRoutes);
 app.use('/api/v1/reservas', v1ReservasRoutes);
 app.use('/api/v1/usuarios', v1UsuariosRoutes);
 app.use('/api/v1/auth', v1AuthRoutes);
+app.use('/api/v1/estadisticas', v1EstadisticasRoutes);
+app.use('/api/v1/informes', v1InformesRoutes);
 
 export default app;

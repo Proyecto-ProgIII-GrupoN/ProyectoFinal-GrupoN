@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Informe de Reservas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 11px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2c3e50;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .fecha-generacion {
+            font-size: 10px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .resumen {
+            background-color: #f8f9fa;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #2980b9;
+        }
+
+        .resumen p {
+            margin: 3px 0;
+            font-size: 11px;
+        }
+
+        .reserva {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            background-color: #fff;
+        }
+
+        .reserva-header {
+            background-color: #2980b9;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .reserva-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-group {
+            margin-bottom: 12px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 10px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: #000;
+            font-size: 11px;
+        }
+
+        .servicios-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .servicios-title {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .servicios-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .servicios-table th {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            padding: 6px;
+            text-align: left;
+            font-size: 10px;
+            border-bottom: 2px solid #bdc3c7;
+        }
+
+        .servicios-table td {
+            padding: 6px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 10px;
+        }
+
+        .servicios-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .sin-servicios {
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 3px;
+        }
+
+        .totales {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #2c3e50;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 11px;
+        }
+
+        .total-row.final {
+            font-weight: bold;
+            font-size: 13px;
+            color: #2c3e50;
+            border-top: 2px solid #2c3e50;
+            padding-top: 8px;
+            margin-top: 5px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 9px;
+            color: #777;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        @media print {
+            .reserva {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📅 Informe de Reservas de Salones</h1>
+        <div class="fecha-generacion">
+            Generado el: {{fechaGeneracion}} | Total de reservas: {{totalReservas}}
+        </div>
+    </div>
+
+    <div class="resumen">
+        <p><strong>Resumen del Informe:</strong></p>
+        <p>Este documento contiene todas las reservas activas del sistema, incluyendo información detallada de clientes, salones, turnos y servicios contratados.</p>
+    </div>
+
+    {{#each reservas}}
+    <div class="reserva">
+        <div class="reserva-header">
+            Reserva #{{this.reserva_id}} - {{this.fecha_reserva}}
+        </div>
+
+        <div class="reserva-info">
+            <div class="info-group">
+                <span class="info-label">👤 Cliente:</span>
+                <span class="info-value">{{this.cliente_nombre}}</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">📧 Email:</span>
+                <span class="info-value">{{this.cliente_email}}</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">📱 Teléfono:</span>
+                <span class="info-value">{{this.cliente_celular}}</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">🎨 Temática:</span>
+                <span class="info-value">{{this.tematica}}</span>
+            </div>
+        </div>
+
+        <div class="reserva-info">
+            <div class="info-group">
+                <span class="info-label">🏢 Salón:</span>
+                <span class="info-value">{{this.salon_titulo}}</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">📍 Dirección:</span>
+                <span class="info-value">{{this.salon_direccion}}</span>
+            </div>
+            <div class="info-group">
+                <span class="info-label">⏰ Turno:</span>
+                <span class="info-value">{{this.hora_desde}} - {{this.hora_hasta}} (Orden: {{this.turno_orden}})</span>
+            </div>
+        </div>
+
+        {{#if this.tiene_servicios}}
+        <div class="servicios-section">
+            <div class="servicios-title">🎁 Servicios Adicionales Contratados:</div>
+            <table class="servicios-table">
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th style="text-align: right;">Importe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.servicios}}
+                    <tr>
+                        <td>{{this.descripcion}}</td>
+                        <td style="text-align: right;">{{this.importe}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        {{else}}
+        <div class="servicios-section">
+            <div class="sin-servicios">ℹ️ Esta reserva no incluye servicios adicionales.</div>
+        </div>
+        {{/if}}
+
+        <div class="totales">
+            <div class="total-row">
+                <span>🏢 Importe Salón:</span>
+                <span>{{this.importe_salon}}</span>
+            </div>
+            {{#if this.tiene_servicios}}
+            <div class="total-row">
+                <span>🎁 Subtotal Servicios:</span>
+                <span>{{this.subtotal_servicios}}</span>
+            </div>
+            {{/if}}
+            <div class="total-row final">
+                <span>💰 TOTAL:</span>
+                <span>{{this.importe_total}}</span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+
+    <div class="footer">
+        <p>Programación III - Trabajo Final Integrador - Grupo N</p>
+        <p>Este informe fue generado automáticamente por el sistema de gestión de reservas.</p>
+    </div>
+</body>
+</html>
+

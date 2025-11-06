@@ -152,5 +152,13 @@ export default class ReservasService {
         }
         return this.reservas.eliminarReserva(reserva_id);
     }
+
+    /**
+     * Obtiene todos los datos necesarios para generar reportes PDF/CSV
+     * @returns {Promise<Array>} Array de reservas con todos sus datos (cliente, salón, turno, servicios)
+     */
+    obtenerDatosReporte = async () => {
+        return await this.reservas.buscarDatosReporte();
+    }
 }
 

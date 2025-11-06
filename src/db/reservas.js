@@ -202,5 +202,70 @@ export default class Reservas {
             subtotal_servicios: subtotalServicios
         };
     }
+
+    /**
+     * Obtiene todos los datos necesarios para generar reportes PDF/CSV
+     * Incluye: reserva, cliente, salón, turno y servicios
+     * @returns {Promise<Array>} Array de reservas con todos sus datos
+     */
+    buscarDatosReporte = async () => {
+        try {
+            // Obtener todas las reservas activas con datos básicos
+            const [reservas] = await pool.execute(
+                `SELECT
+                    r.reserva_id,
+                    DATE_FORMAT(r.fecha_reserva, '%d/%m/%Y') as fecha_reserva,
+                    r.tematica,
+                    r.importe_salon,
+                    r.importe_total,
+                    s.titulo as salon_titulo,
+                    s.direccion as salon_direccion,
+                    DATE_FORMAT(t.hora_desde, '%H:%i') as hora_desde,
+                    DATE_FORMAT(t.hora_hasta, '%H:%i') as hora_hasta,
+                    t.orden as turno_orden,
+                    CONCAT(u.nombre, ' ', u.apellido) as cliente_nombre,
+                    u.nombre_usuario as cliente_email,
+                    u.celular as cliente_celular
+                FROM reservas r
+                LEFT JOIN salones s ON r.salon_id = s.salon_id
+                LEFT JOIN turnos t ON r.turno_id = t.turno_id
+                LEFT JOIN usuarios u ON r.usuario_id = u.usuario_id
+                WHERE r.activo = 1
+                ORDER BY r.fecha_reserva DESC, r.reserva_id DESC`
+            );
+
+            // Para cada reserva, obtener sus servicios
+            const reservasConServicios = await Promise.all(
+                reservas.map(async (reserva) => {
+                    const [serviciosRows] = await pool.execute(
+                        `SELECT s.descripcion, rs.importe
+                        FROM reservas_servicios rs
+                        LEFT JOIN servicios s ON rs.servicio_id = s.servicio_id
+                        WHERE rs.reserva_id = ?`,
+                        [reserva.reserva_id]
+                    );
+
+                    const servicios = serviciosRows.map(s => ({
+                        descripcion: s.descripcion,
+                        importe: parseFloat(s.importe || 0)
+                    }));
+
+                    const subtotalServicios = servicios.reduce((sum, s) => sum + s.importe, 0);
+
+                    return {
+                        ...reserva,
+                        servicios: servicios,
+                        subtotal_servicios: subtotalServicios,
+                        tiene_servicios: servicios.length > 0
+                    };
+                })
+            );
+
+            return reservasConServicios;
+        } catch (error) {
+            console.error('Error en buscarDatosReporte:', error);
+            throw new Error('Error al obtener datos para el reporte');
+        }
+    }
 }
 
