@@ -127,6 +127,14 @@ const options = {
         description: 'BREAD de usuarios'
       },
       {
+        name: 'Estadísticas',
+        description: 'Estadísticas del sistema generadas mediante stored procedures'
+      },
+      {
+        name: 'Informes',
+        description: 'Generación de reportes de reservas en formato PDF y CSV'
+      },
+      {
         name: 'Sistema',
         description: 'Endpoints del sistema'
       }

@@ -31,7 +31,10 @@ export const authenticate = async (req, res, next) => {
 
 export const authorizeRoles = (...rolesPermitidos) => {
   return (req, res, next) => {
-    if (!req.user || !rolesPermitidos.includes(req.user.rol)) {
+    // Aplanar el array en caso de que se pase como authorizeRoles([1]) o authorizeRoles(1, 2)
+    const roles = rolesPermitidos.flat();
+    
+    if (!req.user || !roles.includes(req.user.rol)) {
       return res.status(403).json({ estado: false, mensaje: 'No autorizado' });
     }
     next();
