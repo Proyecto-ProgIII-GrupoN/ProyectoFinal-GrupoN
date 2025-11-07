@@ -187,6 +187,21 @@ export default class InformesService {
                     }
                 });
 
+                // Guardar PDF en carpeta temp
+                const tempDir = path.join(process.cwd(), 'temp');
+                if (!fs.existsSync(tempDir)) {
+                    fs.mkdirSync(tempDir, { recursive: true });
+                }
+
+                // Generar nombre de archivo con fecha y hora
+                const fecha = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+                const nombreArchivo = `reservas_${fecha}.pdf`;
+                const rutaArchivo = path.join(tempDir, nombreArchivo);
+
+                // Guardar buffer en archivo
+                fs.writeFileSync(rutaArchivo, buffer);
+                console.log(`📄 PDF guardado en: ${rutaArchivo}`);
+
                 return buffer;
             } finally {
                 if (browser) {

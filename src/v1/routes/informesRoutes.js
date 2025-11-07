@@ -36,18 +36,22 @@ const informesController = new InformesController();
  *         example: pdf
  *     responses:
  *       200:
- *         description: Informe generado exitosamente
+ *         description: |
+ *           Informe generado exitosamente. 
+ *           El archivo se descargará automáticamente.
+ *           **Nota para Swagger UI**: Los archivos binarios (PDF/CSV) se descargarán directamente, 
+ *           no se mostrarán en el panel de respuesta.
  *         content:
  *           application/pdf:
  *             schema:
  *               type: string
  *               format: binary
- *             description: Archivo PDF con el informe de reservas
+ *             description: Archivo PDF con el informe de reservas (se descarga automáticamente)
  *           text/csv:
  *             schema:
  *               type: string
  *               format: binary
- *             description: Archivo CSV con el informe de reservas
+ *             description: Archivo CSV con el informe de reservas (se descarga automáticamente)
  *       400:
  *         description: Formato inválido
  *         content:

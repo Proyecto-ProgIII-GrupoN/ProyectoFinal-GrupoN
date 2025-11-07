@@ -46,11 +46,16 @@ export default class InformesController {
 
                 res.set({
                     'Content-Type': 'application/pdf',
-                    'Content-Disposition': `inline; filename="${nombreArchivo}"`,
+                    'Content-Disposition': `attachment; filename="${nombreArchivo}"`,
                     'Content-Length': buffer.length
                 });
 
-                return res.status(200).end(buffer);
+                res.status(200).end(buffer);
+                
+                // Limpiar archivos temporales después de enviar (en segundo plano)
+                this.informesService.limpiarArchivosTemporales().catch(console.error);
+                
+                return;
 
             } else if (formato === 'csv') {
                 const rutaArchivo = await this.informesService.informeReservasCsv(datosReporte);
