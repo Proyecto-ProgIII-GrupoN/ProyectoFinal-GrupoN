@@ -1,7 +1,7 @@
 # DOCUMENTACION
 
 ## 1) Arquitectura general
-- Front Dashboard: Servido por el backend en http://localhost:3000/dashboard
+- Front Dashboard: Servido por el backend en http://localhost:3000
 - Front Registro (público, client-side): Carpeta RegisterFrontLiveServer/ (se abre con Live Server)
 - Backend API REST: Node/Express en http://localhost:3000/api/v1
 - Almacenamiento de fotos subidas: public/uploads expuestas en /uploads/<archivo>
