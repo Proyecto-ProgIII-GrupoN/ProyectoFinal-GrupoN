@@ -44,10 +44,11 @@ async function cargarSalones() {
         if (!response.ok) throw new Error("Error al obtener salones");
 
         const data = await response.json();
-        salonesGlobal = data.datos; // guardamos los salones para usar después
+        const salones = data.datos || data.data || [];
+        salonesGlobal = salones;
+
         const selectSalones = document.getElementById("salon");
         selectSalones.innerHTML = `<option value="">Seleccionar salón</option>`;
-
 
         salonesGlobal.forEach(salon => {
             const option = document.createElement("option");
@@ -67,18 +68,21 @@ async function cargarServicios() {
         const response = await fetch("http://localhost:3000/api/v1/servicios");
         if (!response.ok) throw new Error("Error al obtener servicios");
 
-        const servicios = await response.json();
-        console.log("Servicios obtenidos:", servicios);
+        const data = await response.json();
+        const servicios = data.datos || data.data || [];
 
         const contenedorServicios = document.getElementById("servicios");
         contenedorServicios.innerHTML = "";
 
-        servicios.data.forEach(servicio => {
+        servicios.forEach(servicio => {
             const div = document.createElement("div");
             div.classList.add("form-check");
-            console.log(servicio.servicio_id)
             div.innerHTML = `
-                <input class="form-check-input" type="checkbox" value="${servicio.servicio_id}" data-precio="${servicio.importe}" id="serv-${servicio.servicio_id}">
+                <input class="form-check-input"
+                       type="checkbox"
+                       value="${servicio.servicio_id}"
+                       data-precio="${servicio.importe}"
+                       id="serv-${servicio.servicio_id}">
                 <label class="form-check-label" for="serv-${servicio.servicio_id}">
                     ${servicio.descripcion} ($${servicio.importe})
                 </label>
@@ -89,6 +93,7 @@ async function cargarServicios() {
         console.error("Error cargando servicios:", error);
     }
 }
+
 
 async function cargarTurnos() {
     try {
@@ -118,7 +123,7 @@ async function cargarTurnos() {
 
 function inicializarReserva() {
     const form = document.getElementById("formularioReserva");
-    const totalSpan = document.getElementById("total");
+    if (!form) return;
 
     form.addEventListener("change", calcularTotal);
     form.addEventListener("submit", enviarReserva);
@@ -126,20 +131,19 @@ function inicializarReserva() {
     function calcularTotal() {
         let total = 0;
 
-        // Precio de servicios
+        // Servicios
         document.querySelectorAll("#servicios input:checked").forEach(chk => {
             total += parseFloat(chk.dataset.precio || 0);
         });
 
-        // Precio del salón
-        const salonSeleccionado = salonesGlobal.find(s => s.salon_id == document.getElementById("salon").value);
+        // Salón
+        const salonSeleccionado = salonesGlobal.find(
+            s => s.salon_id == document.getElementById("salon").value
+        );
         const importeSalon = salonSeleccionado ? parseFloat(salonSeleccionado.importe) : 0;
         total += importeSalon;
 
-        // Actualizamos el span de total
         document.getElementById("total").textContent = total;
-
-        // Retornamos importeSalon y total para usarlo en enviarReserva
         return { importeSalon, total };
     }
 
@@ -147,29 +151,37 @@ function inicializarReserva() {
         e.preventDefault();
 
         const token = localStorage.getItem("token");
-        const payload = parseJwt(token);
-        const usuario = JSON.parse(localStorage.getItem("usuario"));
-        if (!usuario) {
+        if (!token) {
             Swal.fire("Error", "No hay sesión activa", "error");
             return;
         }
-        const usuario_id = usuario.id; // o usuario.usuario_id según cómo lo tengas
-
 
         const { importeSalon, total } = calcularTotal();
 
-        const reservaData = {
-            usuario_id: usuario_id,
-            fecha_reserva: document.getElementById("fecha").value,
-            tematica: document.getElementById("tematica").value,
-            salon_id: parseInt(document.getElementById("salon").value),
-            turno_id: parseInt(document.getElementById("turno").value), // Asegúrate de tener un input para esto
-            foto_cumpleaniero: null, // o el valor del input si lo tienes
-            importe_salon: importeSalon,
-            importe_total: total,
-            servicios: Array.from(document.querySelectorAll("#servicios input:checked")).map(chk => parseInt(chk.value))
-        };
+        const fecha_reserva = document.getElementById("fecha").value;
+        const tematica = document.getElementById("tematica").value;
+        const salon_id = parseInt(document.getElementById("salon").value);
+        const turno_id = parseInt(document.getElementById("turno").value);
 
+        if (!fecha_reserva || !salon_id || !turno_id) {
+            Swal.fire("Error", "Completa todos los campos requeridos", "error");
+            return;
+        }
+
+        const serviciosSeleccionados = Array
+            .from(document.querySelectorAll("#servicios input:checked"))
+            .map(chk => ({
+                servicio_id: parseInt(chk.value),
+                importe: parseFloat(chk.dataset.precio || 0)
+            }));
+
+        const reservaData = {
+            fecha_reserva,
+            salon_id,
+            turno_id,
+            tematica,
+            ...(serviciosSeleccionados.length > 0 && { servicios: serviciosSeleccionados })
+        };
 
         console.log("Reserva enviada:", reservaData);
 
@@ -183,24 +195,29 @@ function inicializarReserva() {
                 body: JSON.stringify(reservaData)
             });
 
-            if (!response.ok) throw new Error("Error al crear la reserva");
+            const data = await response.json();
+            console.log("Respuesta crear reserva:", data);
 
-            Swal.fire({
+            if (!response.ok || data.estado === false) {
+                // Esto te muestra el motivo real del 400
+                throw new Error(data.mensaje || (data.errores && data.errores[0]?.msg) || "Error al crear la reserva");
+            }
+
+            await Swal.fire({
                 icon: "success",
                 title: "Reserva confirmada",
                 text: "Tu reserva ha sido registrada exitosamente.",
                 confirmButtonText: "Aceptar"
-            }).then(() => {
-                window.location.href = "reservasUsuario.html";
             });
+
+            window.location.href = "reservasUsuario.html";
 
         } catch (error) {
             console.error("Error al enviar reserva:", error);
-            Swal.fire("Error", "No se pudo enviar la reserva", "error");
+            Swal.fire("Error", error.message || "No se pudo enviar la reserva", "error");
         }
     }
 }
-
 
 // ----------------------------------------------------
 // 🔹 Decodificar JWT (igual que en main.js)
