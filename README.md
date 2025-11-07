@@ -49,6 +49,62 @@ npm run dev:watch
 npm start
 ```
 
+El servidor se ejecutará en `http://localhost:3000`
+
+## 🌐 **Dashboard Web**
+
+El sistema incluye dashboards web para administradores y empleados, servidos directamente desde el backend.
+
+### **Acceso al Dashboard:**
+
+1. Ejecutar el servidor: `npm run dev` o `npm start`
+2. Abrir en el navegador: `http://localhost:3000`
+3. Seleccionar el rol o ir directamente a:
+   - **Admin:** `http://localhost:3000/dashboard/admin`
+   - **Empleado:** `http://localhost:3000/dashboard/empleado`
+
+### **Rutas del Dashboard:**
+
+| Ruta | Descripción | Acceso |
+|------|-------------|--------|
+| `/` | Página principal de selección de rol | Público |
+| `/dashboard/admin` | Página de login para administradores | Público |
+| `/dashboard/admin-dashboard` | Dashboard completo de administrador | Solo Admin (tipo_usuario = 1) |
+| `/dashboard/empleado` | Página de login para empleados | Público |
+| `/dashboard/empleado-dashboard` | Dashboard de empleado | Solo Empleado (tipo_usuario = 2) |
+
+### **Usuarios de Prueba:**
+
+**Administrador:**
+- Email: `admisalones@gmail.com`
+- Contraseña: `admi123*`
+
+**Empleado:**
+- Email: `empeadoreservas@gmail.com`
+- Contraseña: `emp123***`
+
+**Cliente:**
+- Email: `clientereservas@outlook.com`
+- Contraseña: `cli123***`
+
+### **Funcionalidades del Dashboard:**
+
+#### **👑 Administrador:**
+- ✅ BREAD completo de Reservas
+- ✅ BREAD completo de Usuarios
+- ✅ BREAD completo de Salones
+- ✅ BREAD completo de Servicios
+- ✅ BREAD completo de Turnos
+- ✅ Estadísticas con gráficos interactivos
+- ✅ Generación de informes (PDF/CSV)
+
+#### **👨‍💼 Empleado:**
+- ✅ Listado de Reservas (solo lectura)
+- ✅ Listado de Clientes (solo lectura)
+- ✅ BREAD completo de Salones
+- ✅ BREAD completo de Servicios
+- ✅ BREAD completo de Turnos
+
 ## 📋 **API de Salones**
 
 ### **Base URL:** `http://localhost:3000/api/v1/salones`

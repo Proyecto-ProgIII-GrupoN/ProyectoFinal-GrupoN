@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Empleado - Sistema de Reservas</title>
+    <link rel="stylesheet" href="/dashboard/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h2>Sistema de Reservas</h2>
+            <p class="user-role">Empleado</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#reservas" class="nav-item active" data-section="reservas">
+                <i class="fas fa-calendar-check"></i>
+                <span>Reservas</span>
+            </a>
+            <a href="#clientes" class="nav-item" data-section="clientes">
+                <i class="fas fa-users"></i>
+                <span>Clientes</span>
+            </a>
+            <a href="#salones" class="nav-item" data-section="salones">
+                <i class="fas fa-building"></i>
+                <span>Salones</span>
+            </a>
+            <a href="#servicios" class="nav-item" data-section="servicios">
+                <i class="fas fa-concierge-bell"></i>
+                <span>Servicios</span>
+            </a>
+            <a href="#turnos" class="nav-item" data-section="turnos">
+                <i class="fas fa-clock"></i>
+                <span>Turnos</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button type="button" id="logoutBtn" class="btn btn-secondary btn-block">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="topbar">
+            <h1 id="pageTitle">Reservas</h1>
+            <div class="user-info">
+                <span id="userName">Empleado</span>
+                <button type="button" id="logoutBtnTop" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i> Salir
+                </button>
+            </div>
+        </header>
+
+        <div class="content-area">
+            <!-- Reservas Section -->
+            <section id="section-reservas" class="content-section active">
+                <div class="section-header">
+                    <h2>Listado de Reservas</h2>
+                </div>
+
+                <!-- Filtros -->
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Buscar:</label>
+                        <input type="text" id="searchReservas" placeholder="Buscar por cliente, salón..." class="input-search">
+                    </div>
+                    <div class="filter-group">
+                        <label>Estado:</label>
+                        <select id="filterEstado" class="input-select">
+                            <option value="">Todas</option>
+                            <option value="1">Activas</option>
+                            <option value="0">Inactivas</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="btnLimpiarFiltros">
+                        <i class="fas fa-times"></i> Limpiar
+                    </button>
+                </div>
+
+                <!-- Tabla de Reservas -->
+                <div class="table-container">
+                    <div id="reservasTable">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando reservas...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clientes Section -->
+            <section id="section-clientes" class="content-section">
+                <div class="section-header">
+                    <h2>Listado de Clientes</h2>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Buscar:</label>
+                        <input type="text" id="searchClientes" placeholder="Buscar por nombre, email..." class="input-search">
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="btnLimpiarFiltrosClientes">
+                        <i class="fas fa-times"></i> Limpiar
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <div id="clientesTable">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando clientes...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Salones -->
+            <section id="section-salones" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Salones</h2>
+                    <button type="button" class="btn btn-primary" id="btnNuevoSalon">
+                        <i class="fas fa-plus"></i> Nuevo Salón
+                    </button>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Buscar:</label>
+                        <input type="text" id="searchSalones" placeholder="Buscar por título, dirección..." class="input-search">
+                    </div>
+                    <div class="filter-group">
+                        <label>Estado:</label>
+                        <select id="filterEstadoSalon" class="input-select">
+                            <option value="">Todos</option>
+                            <option value="1">Activos</option>
+                            <option value="0">Inactivos</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="btnLimpiarFiltrosSalones">
+                        <i class="fas fa-times"></i> Limpiar
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <div id="salonesTable">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando salones...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Servicios -->
+            <section id="section-servicios" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Servicios</h2>
+                    <button type="button" class="btn btn-primary" id="btnNuevoServicio">
+                        <i class="fas fa-plus"></i> Nuevo Servicio
+                    </button>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Buscar:</label>
+                        <input type="text" id="searchServicios" placeholder="Buscar por descripción..." class="input-search">
+                    </div>
+                    <div class="filter-group">
+                        <label>Estado:</label>
+                        <select id="filterEstadoServicio" class="input-select">
+                            <option value="">Todos</option>
+                            <option value="1">Activos</option>
+                            <option value="0">Inactivos</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="btnLimpiarFiltrosServicios">
+                        <i class="fas fa-times"></i> Limpiar
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <div id="serviciosTable">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando servicios...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Turnos -->
+            <section id="section-turnos" class="content-section">
+                <div class="section-header">
+                    <h2>Gestión de Turnos</h2>
+                    <button type="button" class="btn btn-primary" id="btnNuevoTurno">
+                        <i class="fas fa-plus"></i> Nuevo Turno
+                    </button>
+                </div>
+
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <label>Estado:</label>
+                        <select id="filterEstadoTurno" class="input-select">
+                            <option value="">Todos</option>
+                            <option value="1">Activos</option>
+                            <option value="0">Inactivos</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="btnLimpiarFiltrosTurnos">
+                        <i class="fas fa-times"></i> Limpiar
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <div id="turnosTable">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando turnos...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal para Crear/Editar Salón -->
+    <div id="modalSalon" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalSalonTitle">Nuevo Salón</h3>
+                <button type="button" class="modal-close" id="btnCerrarModalSalon" aria-label="Cerrar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="formSalon" class="modal-body">
+                <input type="hidden" id="salon_id_modal" name="salon_id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="salon_titulo">Título *</label>
+                        <input type="text" id="salon_titulo" name="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="salon_importe">Importe *</label>
+                        <input type="number" id="salon_importe" name="importe" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="salon_direccion">Dirección *</label>
+                    <input type="text" id="salon_direccion" name="direccion" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="salon_capacidad">Capacidad</label>
+                        <input type="number" id="salon_capacidad" name="capacidad" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="salon_latitud">Latitud</label>
+                        <input type="number" id="salon_latitud" name="latitud" step="any">
+                    </div>
+                    <div class="form-group">
+                        <label for="salon_longitud">Longitud</label>
+                        <input type="number" id="salon_longitud" name="longitud" step="any">
+                    </div>
+                </div>
+                <div id="modalErrorSalon" class="error-message" style="display: none;"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelarSalon">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Salón</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Crear/Editar Servicio -->
+    <div id="modalServicio" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalServicioTitle">Nuevo Servicio</h3>
+                <button type="button" class="modal-close" id="btnCerrarModalServicio" aria-label="Cerrar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="formServicio" class="modal-body">
+                <input type="hidden" id="servicio_id_modal" name="servicio_id">
+                <div class="form-group">
+                    <label for="servicio_descripcion">Descripción *</label>
+                    <input type="text" id="servicio_descripcion" name="descripcion" required>
+                </div>
+                <div class="form-group">
+                    <label for="servicio_importe">Importe *</label>
+                    <input type="number" id="servicio_importe" name="importe" step="0.01" required>
+                </div>
+                <div id="modalErrorServicio" class="error-message" style="display: none;"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelarServicio">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Servicio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Crear/Editar Turno -->
+    <div id="modalTurno" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTurnoTitle">Nuevo Turno</h3>
+                <button type="button" class="modal-close" id="btnCerrarModalTurno" aria-label="Cerrar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="formTurno" class="modal-body">
+                <input type="hidden" id="turno_id_modal" name="turno_id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="turno_orden">Orden *</label>
+                        <input type="number" id="turno_orden" name="orden" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="turno_hora_desde">Hora Desde *</label>
+                        <input type="time" id="turno_hora_desde" name="hora_desde" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="turno_hora_hasta">Hora Hasta *</label>
+                        <input type="time" id="turno_hora_hasta" name="hora_hasta" required>
+                    </div>
+                </div>
+                <div id="modalErrorTurno" class="error-message" style="display: none;"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelarTurno">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Turno</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/dashboard/js/auth.js"></script>
+    <script src="/dashboard/js/empleado-dashboard.js"></script>
+</body>
+</html>
+

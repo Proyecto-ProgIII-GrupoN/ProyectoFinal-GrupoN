@@ -82,11 +82,21 @@ export default class Usuarios {
     }
 
     crear = async ({ nombre, apellido, nombre_usuario, contrasenia_hash, tipo_usuario, celular = null, foto = null }) => {
-        const [result] = await pool.execute(
-            'INSERT INTO usuarios (nombre, apellido, nombre_usuario, contrasenia, tipo_usuario, celular, foto) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [nombre, apellido, nombre_usuario, contrasenia_hash, tipo_usuario, celular, foto]
-        );
-        return this.buscarPorId(result.insertId);
+        try {
+            const [result] = await pool.execute(
+                'INSERT INTO usuarios (nombre, apellido, nombre_usuario, contrasenia, tipo_usuario, celular, foto, activo) VALUES (?, ?, ?, ?, ?, ?, ?, 1)',
+                [nombre, apellido, nombre_usuario, contrasenia_hash, tipo_usuario, celular, foto]
+            );
+            
+            const usuarioCreado = await this.buscarPorId(result.insertId);
+            if (!usuarioCreado) {
+                throw new Error('No se pudo recuperar el usuario después de crearlo');
+            }
+            return usuarioCreado;
+        } catch (error) {
+            console.error('Error en crear usuario:', error);
+            throw error;
+        }
     }
 
     actualizarUsuario = async (usuario_id, datos) => {

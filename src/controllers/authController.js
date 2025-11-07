@@ -64,6 +64,63 @@ export default class AuthController {
             return res.status(500).json({ estado: false, mensaje: 'Error interno en login' });
         }
     }
+
+    register = async (req, res) => {
+        try {
+            const { nombre, apellido, nombre_usuario, contrasenia, celular } = req.body;
+
+            if (!nombre || !apellido || !nombre_usuario || !contrasenia) {
+                return res.status(400).json({ estado: false, mensaje: 'nombre, apellido, nombre_usuario y contrasenia son requeridos' });
+            }
+
+            // Verificar email único
+            const existente = await this.usuarios.buscarPorNombreUsuario(nombre_usuario);
+            if (existente) {
+                return res.status(400).json({ estado: false, mensaje: 'El email ya está registrado' });
+            }
+
+            // Hash de contraseña (bcrypt)
+            const contrasenia_hash = await bcrypt.hash(contrasenia, 10);
+
+            // Foto opcional
+            let foto = null;
+            if (req.file && req.file.filename) {
+                foto = `/uploads/${req.file.filename}`;
+            }
+
+            // Crear usuario tipo CLIENTE
+            const creado = await this.usuarios.crear({
+                nombre,
+                apellido,
+                nombre_usuario,
+                contrasenia_hash,
+                tipo_usuario: ROLE.CLIENTE,
+                celular: celular || null,
+                foto
+            });
+
+            if (!creado) {
+                return res.status(500).json({ estado: false, mensaje: 'Error al crear el usuario en la base de datos' });
+            }
+
+            return res.status(201).json({
+                estado: true,
+                mensaje: 'Usuario registrado correctamente',
+                usuario: {
+                    usuario_id: creado.usuario_id,
+                    nombre: creado.nombre,
+                    apellido: creado.apellido,
+                    nombre_usuario: creado.nombre_usuario,
+                    tipo_usuario: creado.tipo_usuario,
+                    celular: creado.celular,
+                    foto: creado.foto
+                }
+            });
+        } catch (err) {
+            console.error('Error en register:', err);
+            return res.status(500).json({ estado: false, mensaje: 'Error interno en registro' });
+        }
+    }
 }
 
 export { ROLE };

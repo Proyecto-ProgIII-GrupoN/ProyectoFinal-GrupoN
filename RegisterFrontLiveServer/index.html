@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro (Cliente) - Front separado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --primary:#1e3c72; --primary2:#2a5298; }
+    *{box-sizing:border-box} body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary),var(--primary2));padding:20px}
+    .card{background:#fff;border-radius:20px;box-shadow:0 25px 80px rgba(0,0,0,.35);width:100%;max-width:520px;overflow:hidden}
+    .header{padding:28px 28px 0;text-align:center}
+    .icon{font-size:3.8rem;color:var(--primary);background:rgba(102,126,234,.1);width:96px;height:96px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;border:3px solid rgba(102,126,234,.18)}
+    h1{margin:0 0 6px;font-size:1.6rem;color:#0f172a;font-weight:800}
+    .subtitle{margin:0 0 22px;color:#475569;font-weight:600}
+    form{padding:0 28px 24px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .group{margin-bottom:14px}
+    label{display:block;margin:0 0 8px;color:#334155;font-size:.92rem;font-weight:600}
+    input[type="text"],input[type="email"],input[type="password"],input[type="file"]{width:100%;padding:12px 14px;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;transition:border-color .2s}
+    input:focus{outline:none;border-color:#667eea}
+    .error{display:none;background:#fee;border:1px solid #fecaca;color:#b91c1c;border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:.95rem}
+    .success{display:none;background:#d1fae5;border:2px solid #10b981;color:#065f46;border-radius:10px;padding:16px;margin-bottom:12px;font-size:1rem;font-weight:600;text-align:center}
+    .preview{display:none;margin-top:10px}
+    .preview img{max-width:120px;border-radius:10px;border:1px solid #e2e8f0}
+    .btn{display:inline-flex;gap:10px;align-items:center;justify-content:center;width:100%;padding:12px 18px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;font-weight:800;letter-spacing:.2px;cursor:pointer;transition:transform .15s,box-shadow .2s}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(30,60,114,.35)}
+    .footer{padding:0 28px 28px;text-align:center}
+    .footer a{color:#667eea;text-decoration:none;font-weight:600}
+    .footer a:hover{text-decoration:underline}
+    @media(max-width:560px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="icon"><i class="fas fa-user-plus"></i></div>
+      <h1>Crear cuenta de Cliente</h1>
+      <p class="subtitle">Front independiente (Live Server) → API backend</p>
+    </div>
+
+    <form id="registerForm" enctype="multipart/form-data">
+      <div id="errorMessage" class="error"></div>
+      <div id="successMessage" class="success"></div>
+      <div class="row">
+        <div class="group">
+          <label for="nombre">Nombre *</label>
+          <input id="nombre" name="nombre" type="text" required>
+        </div>
+        <div class="group">
+          <label for="apellido">Apellido *</label>
+          <input id="apellido" name="apellido" type="text" required>
+        </div>
+      </div>
+      <div class="group">
+        <label for="nombre_usuario">Email *</label>
+        <input id="nombre_usuario" name="nombre_usuario" type="email" required>
+      </div>
+      <div class="group">
+        <label for="contrasenia">Contraseña *</label>
+        <input id="contrasenia" name="contrasenia" type="password" minlength="6" required>
+      </div>
+      <div class="group">
+        <label for="celular">Celular (opcional)</label>
+        <input id="celular" name="celular" type="text">
+      </div>
+      <div class="group">
+        <label for="foto">Foto de perfil (opcional)</label>
+        <input id="foto" name="foto" type="file" accept="image/*">
+        <div class="preview" id="fotoPreview"><img id="fotoImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Vista previa"></div>
+      </div>
+      <button class="btn" type="submit"><i class="fas fa-user-check"></i> Crear cuenta</button>
+    </form>
+
+    <div class="footer">
+      <a href="javascript:void(0)" onclick="history.back()">← Volver</a>
+    </div>
+  </div>
+
+  <script src="js/register.js"></script>
+</body>
+</html>
