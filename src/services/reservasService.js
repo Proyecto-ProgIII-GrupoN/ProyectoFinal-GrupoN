@@ -41,7 +41,7 @@ export default class ReservasService {
         if (!salon) {
             throw new Error('El salón especificado no existe');
         }
-        const importe_salon = salon.importe;
+        const importe_salon = parseFloat(salon.importe || 0);
 
         // Calcular importe_total = importe_salon + suma de servicios
         let importe_total = importe_salon;
@@ -122,7 +122,7 @@ export default class ReservasService {
             // Obtener importe del salón (actual o nuevo)
             const salonId = datos.salon_id || existe.salon_id;
             const salon = await this.salones.buscarPorId(salonId);
-            const importe_salon = salon.importe;
+            const importe_salon = parseFloat(salon.importe || 0);
 
             // Calcular nuevo importe_total
             let importe_total = importe_salon;
