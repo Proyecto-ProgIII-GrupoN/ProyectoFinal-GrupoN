@@ -280,3 +280,5 @@ npm test           # Ejecutar tests (no implementado)
 ## 📄 **Licencia**
 
 Este proyecto está bajo la Licencia ISC.
+
+Link al video de presentacion de proyecto: https://drive.google.com/file/d/11ucW_fXBmMA6-o_diiM0asa06HkFP9wx/view
