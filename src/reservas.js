@@ -34,6 +34,17 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(morgan('combined'));
 app.use(express.json());
 
+// API: evitar caché en respuestas para que el frontend siempre reciba datos actualizados
+// Esto aplica a todas las rutas que comienzan con /api
+app.use('/api', (_req, res, next) => {
+    res.set({
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+    });
+    next();
+});
+
 // Ruta absoluta al dashboard (desde src/ vamos una carpeta arriba a la raíz del proyecto)
 const dashboardPath = path.resolve(__dirname, '../dashboard');
 

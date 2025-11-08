@@ -1,4 +1,5 @@
 import EstadisticasService from "../services/estadisticasService.js";
+import { pool } from "../db/conexion.js";
 
 export default class EstadisticasController {
     constructor() {
@@ -13,6 +14,27 @@ export default class EstadisticasController {
     obtener = async (req, res) => {
         try {
             const { tipo } = req.query;
+
+            // Modo debug: calcular rápidamente algunas métricas con consultas directas
+            // para comparar con los resultados del stored procedure.
+            if (req.query.debug === 'true') {
+                const [[{ total_reservas }]] = await pool.execute("SELECT COUNT(*) AS total_reservas FROM reservas WHERE activo = 1");
+                const [[{ total_ingresos }]] = await pool.execute("SELECT COALESCE(SUM(importe_total),0) AS total_ingresos FROM reservas WHERE activo = 1");
+                const [[{ total_clientes }]] = await pool.execute("SELECT COUNT(DISTINCT usuario_id) AS total_clientes FROM reservas WHERE activo = 1");
+                const [[{ total_salones }]] = await pool.execute("SELECT COUNT(DISTINCT salon_id) AS total_salones FROM reservas WHERE activo = 1");
+
+                return res.json({
+                    estado: true,
+                    mensaje: 'Estadísticas debug calculadas directamente desde consultas',
+                    datos: {
+                        total_reservas: Number(total_reservas) || 0,
+                        total_ingresos: (Number(total_ingresos) || 0).toFixed(2),
+                        promedio_reservas_mes: null,
+                        total_clientes_activos: Number(total_clientes) || 0,
+                        total_salones_activos: Number(total_salones) || 0
+                    }
+                });
+            }
 
             // Si no se especifica tipo, retornar todas las estadísticas
             if (!tipo || tipo === 'todas' || tipo === 'all') {

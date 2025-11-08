@@ -42,10 +42,18 @@ class AuthService {
             headers['Authorization'] = `Bearer ${this.token}`;
         }
 
-        const response = await fetch(`${API_BASE_URL}${url}`, {
+        // For API calls we force network fetch to avoid stale cached responses
+        // `cache: 'no-store'` ensures the browser does not reuse cached responses
+        // and we also set Cache-Control header as a fallback.
+        headers['Cache-Control'] = headers['Cache-Control'] || 'no-cache';
+
+        const fetchOptions = {
             ...options,
-            headers
-        });
+            headers,
+            cache: options.cache || 'no-store'
+        };
+
+        const response = await fetch(`${API_BASE_URL}${url}`, fetchOptions);
 
         if (response.status === 401) {
             this.logout();

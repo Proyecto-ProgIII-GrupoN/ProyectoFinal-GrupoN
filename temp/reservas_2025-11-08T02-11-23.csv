@@ -1,0 +1,24 @@
+ID Reserva,Fecha Reserva,Cliente,Email Cliente,Teléfono Cliente,Salón,Dirección Salón,Turno,Orden Turno,Temática,Servicio,Importe Servicio,Importe Salón,Importe Total
+14,28/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+13,14/11/2025,Cliente Reservas,clientereservas@outlook.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+12,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+12,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Mesa dulce,25000.00,95000.00,95000.00
+11,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+11,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Mesa dulce,25000.00,95000.00,95000.00
+10,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+10,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Mesa dulce,25000.00,95000.00,95000.00
+9,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+9,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Mesa dulce,25000.00,95000.00,95000.00
+8,14/11/2025,Cliente Reservas,clientereservas@outlook.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+8,14/11/2025,Cliente Reservas,clientereservas@outlook.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Mesa dulce,25000.00,95000.00,95000.00
+7,14/11/2025,Cliente Reservas,clientereservas@outlook.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+7,14/11/2025,Cliente Reservas,clientereservas@outlook.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Mesa dulce,25000.00,95000.00,95000.00
+6,14/11/2025,Cliente Reservas 2,clientereservas@gmail.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+5,14/11/2025,Cliente Reservas,clientereservas@outlook.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Servicio excelente,15000.00,95000.00,95000.00
+5,14/11/2025,Cliente Reservas,clientereservas@outlook.com,N/A,Principal,San Lorenzo 1000,15:00 - 17:00,2,Superhéroes,Mesa dulce,25000.00,95000.00,95000.00
+3,08/10/2025,Pamela Gómez,pamgom@correo.com,N/A,Secundario,San Lorenzo 1000,12:00 - 15:00,1,Palermo,Servicio excelente,100000.00,0.00,500000.00
+3,08/10/2025,Pamela Gómez,pamgom@correo.com,N/A,Secundario,San Lorenzo 1000,12:00 - 15:00,1,Palermo,Mesa dulce,100000.00,0.00,500000.00
+3,08/10/2025,Pamela Gómez,pamgom@correo.com,N/A,Secundario,San Lorenzo 1000,12:00 - 15:00,1,Palermo,Tarjetas de invitación,100000.00,0.00,500000.00
+3,08/10/2025,Pamela Gómez,pamgom@correo.com,N/A,Secundario,San Lorenzo 1000,12:00 - 15:00,1,Palermo,Mozos,200000.00,0.00,500000.00
+2,08/10/2025,Juan Carlos López,alblop@correo.com,9876543210,Secundario,San Lorenzo 1000,12:00 - 15:00,1,Messi,Servicio excelente,50000.00,0.00,100000.00
+2,08/10/2025,Juan Carlos López,alblop@correo.com,9876543210,Secundario,San Lorenzo 1000,12:00 - 15:00,1,Messi,Mesa dulce,50000.00,0.00,100000.00
